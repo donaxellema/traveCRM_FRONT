@@ -1,0 +1,186 @@
+<div class="dialog-content p-6">
+    <div class="w-full max-w-3xl">
+
+
+        <!-- Form -->
+
+
+        <div class="w-full">
+            <div class="text-xl">{{tipoDialog}} Campaña</div>
+        </div>
+
+        <!-- <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-label>Account SID </mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:key'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'accountsid'"
+                        matInput>
+                </mat-form-field>
+            </div> -->
+
+
+
+
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                <mat-label>Nombre Campaña</mat-label>
+                <input matInput name="nombre" [(ngModel)]="data.camp_nombre">
+            </mat-form-field>
+            </div>
+
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                <mat-label>Descripcion campaña </mat-label>
+                
+                <textarea matInput [(ngModel)]="data.camp_descripcion"> </textarea>
+            </mat-form-field> 
+            </div>
+
+            <div class="sm:col-span-4">
+                <mat-form-field appearance="outline">
+                <mat-label>Fecha Inicial</mat-label>
+                <input matInput [matDatepicker]="pickerInicial" placeholder="Selecciona una fecha" [(ngModel)]="data.camp_fecha_ini">
+                <mat-datepicker-toggle matSuffix [for]="pickerInicial"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicial></mat-datepicker>
+                </mat-form-field>
+            </div>
+            
+            <div class="sm:col-span-4">
+                <mat-form-field appearance="outline">
+                <mat-label>Fecha Final</mat-label>
+                <input matInput [matDatepicker]="pickerFinal" placeholder="Selecciona una fecha" [(ngModel)]="data.camp_fecha_fin">
+                <mat-datepicker-toggle matSuffix [for]="pickerFinal"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFinal></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <!-- <div>
+                <mat-form-field appearance="outline">
+                <mat-label>Fecha de inicio</mat-label>
+                <input matInput [matDatepicker]="rangePicker" placeholder="Fecha de inicio" [(ngModel)]="rangoFechas.start">
+                </mat-form-field>
+            
+                <mat-form-field appearance="outline">
+                <mat-label>Fecha de fin</mat-label>
+                <input matInput [matDatepicker]="rangePicker" placeholder="Fecha de fin" [(ngModel)]="rangoFechas.end">
+                </mat-form-field>
+            
+                <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+                <mat-date-range-picker #rangePicker></mat-date-range-picker>
+            </div> -->
+
+
+
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                <mat-label>Estado campaña</mat-label>
+                    <!-- <mat-select class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"> -->
+                    <mat-select [(ngModel)]="data.camp_estado" class="bg-gray-50  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <mat-option [value]="'Vigente'">Vigente</mat-option>
+                        <mat-option [value]="'Vencida'">Vencida</mat-option>
+                        <mat-option [value]="'Suspendido'">Suspendido</mat-option>
+                    </mat-select>
+                </mat-form-field> 
+            </div>
+
+
+            <div class="sm:col-span-4">
+                <mat-form-field class="min-w-40 xs:ml-0">
+                <mat-label>Asginar etiqueta</mat-label>
+                <mat-select [(ngModel)]="etiquetaSeleccionada" (selectionChange)="onChangeOpcion($event)">
+                    <mat-option *ngFor="let etiq of etiquetasData" [value]="etiq.etiq_id">
+                        <span [ngStyle]="{'background-color': etiq.etiq_color}" class="color-box"></span>
+                        {{ etiq.etiq_nombre }}
+                    </mat-option>
+                </mat-select>
+
+            
+                </mat-form-field>
+            </div>  
+
+            <div class="sm:col-span-4">
+                <div class="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+                    <h2 class="text-2xl mb-4 text-center"> Subir Imagen </h2>
+                    <form>
+                      <div class="mb-4">
+                        <label class="block text-gray-700"> Seleccionar Imagen </label>
+                        <input type="file" (change)="onFileChange($event)" class="w-full px-3 py-2 border rounded">
+                      </div>
+                      <div *ngIf="imageUrl!=null && urlImagendesdeServer==null" class="mb-4">
+                        <img [src]="imageUrl" alt="Imagen Cargada" class="w-full h-auto rounded shadow-md">
+                      </div>
+                      
+                      <div *ngIf="urlImagendesdeServer!=null && imageUrl==null">
+                        <div class="mb-4" *ngIf="urlImagendesdeServer!=null" >
+                            <img src="{{urlImagen}}{{urlImagendesdeServer }}" alt="Imagen Cargada" class="w-full h-auto rounded shadow-md">
+                        </div>
+                      </div>
+                      <button type="button" (click)="onUpload()"  class="bg-blue-500 text-white px-4 py-2 rounded w-full">Subir</button>
+                    </form>
+                    <!-- {{urlImagendesdeServer}} -->
+                    <!-- {{urlImagen}}
+                    {{urlImagendesdeServer}} -->
+                </div>
+            </div>
+
+
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                <mat-label>link de video </mat-label>
+                
+                <textarea matInput [(ngModel)]="data.camp_videoLink"> </textarea>
+            </mat-form-field> 
+            </div>
+
+            <!-- <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                <mat-label>Teléfono</mat-label>
+                
+                <input matInput [(ngModel)]="data.pers_telefono">
+            </mat-form-field> 
+            </div> -->
+        </div>
+
+
+        <div mat-dialog-actions>
+        <!-- <button mat-button (click)="onCancel()">Cancelar</button>
+        <button mat-button (click)="onSave()">Guardar</button> -->
+        <button
+                        mat-stroked-button
+                        type="button"
+                        (click)="onCancel()">
+                        Cancelar
+                    </button>
+
+        <button
+                        class="ml-4"
+                        mat-flat-button
+                        type="button"
+                        [color]="'primary'"
+                        (click)="onSave()"
+                        >Guardar
+                    </button>
+        </div>
+
+    </div>
+
+</div>  

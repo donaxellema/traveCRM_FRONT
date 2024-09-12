@@ -1,0 +1,52 @@
+<div class="w-full max-w-3xl">
+
+    <!-- Form -->
+    <form [formGroup]="accountForm_Tiempo">
+
+        <!-- Section -->
+        <div class="w-full">
+            <div class="text-xl">Parametros</div>
+            <div class="text-secondary">Configura tiempos de asignacion por el robot u otros parametros!</div>
+        </div>
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <!-- Name -->
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-label>Tiempo en minutos para redirigir a nuevo Vendedor </mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:clock'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'accountsid'"
+                        matInput>
+                </mat-form-field>
+            </div>
+            
+            
+        </div>
+
+
+        <!-- Divider -->
+        <div class="mt-11 mb-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+            <!-- <button
+                mat-stroked-button
+                type="button">
+                Cancelar
+            </button> -->
+            <button
+                class="ml-4"
+                mat-flat-button
+                type="button"
+                [color]="'primary'"
+                (click)="updateCuentaTiempo()">Guardar
+            </button>
+        </div>
+    </form>
+
+</div>

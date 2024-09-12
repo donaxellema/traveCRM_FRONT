@@ -1,0 +1,86 @@
+<div class="w-full max-w-3xl">
+
+    <!-- Form -->
+
+
+    <div class="w-full">
+        <div class="text-xl">{{tipoDialog}} etiqueta</div>
+    </div>
+
+    <!-- <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+        <div class="sm:col-span-4">
+            <mat-form-field
+                class="fuse-mat-emphasized-affix w-full"
+                [subscriptSizing]="'dynamic'">
+                <mat-label>Account SID </mat-label>
+                <mat-icon
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_solid:key'"
+                    matPrefix></mat-icon>
+                <input
+                    [formControlName]="'accountsid'"
+                    matInput>
+            </mat-form-field>
+        </div> -->
+
+
+
+
+<div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+
+<div class="sm:col-span-4">
+    <mat-form-field
+        class="fuse-mat-emphasized-affix w-full"
+        [subscriptSizing]="'dynamic'">
+    <mat-label>Nombre de la Etiqueta</mat-label>
+    <input matInput name="nombre" [(ngModel)]="data.etiq_nombre">
+</mat-form-field>
+</div>
+
+<div class="sm:col-span-4">
+    <mat-form-field
+        class="fuse-mat-emphasized-affix w-full"
+        [subscriptSizing]="'dynamic'">
+      <mat-label>Descripción de la Etiqueta</mat-label>
+      
+    <input matInput [(ngModel)]="data.etiq_descrip">
+  </mat-form-field> 
+</div>
+
+  <!-- <mat-form-field appearance="fill"> -->
+    <div class="sm:col-span-4">
+        <mat-form-field
+            class="fuse-mat-emphasized-affix "
+            >
+
+    <mat-label>Color de la Etiqueta</mat-label>
+    <input matInput type="color" [(ngModel)]="data.etiq_color">
+    <!-- <input type="color" [value]="data.etiq_color" (input)="updateColor($event.target.data.etiq_color)"> -->
+
+  </mat-form-field>
+    </div>
+
+</div>
+
+
+<div mat-dialog-actions>
+  <!-- <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button (click)="onSave()">Guardar</button> -->
+  <button
+                mat-stroked-button
+                type="button"
+                (click)="onCancel()">
+                Cancelar
+            </button>
+
+  <button
+                class="ml-4"
+                mat-flat-button
+                type="button"
+                [color]="'primary'"
+                (click)="onSave()"
+                >Guardar
+            </button>
+</div>
+
+</div>

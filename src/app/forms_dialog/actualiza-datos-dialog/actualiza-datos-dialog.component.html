@@ -1,0 +1,119 @@
+<div class="w-full max-w-3xl">
+
+    <!-- Form -->
+
+
+    <div class="w-full">
+        <div class="text-xl">{{tipoDialog}} perfil</div>
+    </div>
+
+    <!-- <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+        <div class="sm:col-span-4">
+            <mat-form-field
+                class="fuse-mat-emphasized-affix w-full"
+                [subscriptSizing]="'dynamic'">
+                <mat-label>Account SID </mat-label>
+                <mat-icon
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_solid:key'"
+                    matPrefix></mat-icon>
+                <input
+                    [formControlName]="'accountsid'"
+                    matInput>
+            </mat-form-field>
+        </div> -->
+
+
+
+
+    <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+
+        <div class="sm:col-span-4">
+            <mat-form-field
+                class="fuse-mat-emphasized-affix w-full"
+                [subscriptSizing]="'dynamic'">
+            <mat-label>Apodo</mat-label>
+            <input matInput name="nombre" [(ngModel)]="data.usu_nickname">
+        </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field
+                class="fuse-mat-emphasized-affix w-full"
+                [subscriptSizing]="'dynamic'">
+            <mat-label>Email</mat-label>
+            
+            <input matInput [(ngModel)]="data.usu_email">
+        </mat-form-field> 
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field
+                class="fuse-mat-emphasized-affix w-full"
+                [subscriptSizing]="'dynamic'">
+            <mat-label>descripcion</mat-label>
+            
+            <textarea matInput [(ngModel)]="data.usu_descripcion"> </textarea>
+        </mat-form-field> 
+        </div>
+        
+        <div class="sm:col-span-4">
+            <mat-form-field
+                class="fuse-mat-emphasized-affix w-full"
+                [subscriptSizing]="'dynamic'">
+            <mat-label>Mensaje de apertura</mat-label>
+            <textarea matInput name="" id="" [(ngModel)]="data.usu_mensajes" ></textarea>
+        </mat-form-field> 
+        </div>
+
+        
+        <div class="sm:col-span-4">
+            <app-actualiza-password-dialog *ngIf="showChangePassword"></app-actualiza-password-dialog>
+        </div>
+        
+        <div class="sm:col-span-4">
+            <button (click)="toggleChangePassword()">
+                {{ showChangePassword ? 'Cancel' : 'Change Password' }}
+            </button>
+        </div>
+          
+
+
+        <!-- <div class="sm:col-span-4">
+            <mat-form-field
+                class="fuse-mat-emphasized-affix w-full"
+                [subscriptSizing]="'dynamic'">
+            <mat-label>Contraseña Nueva</mat-label>
+            
+            <input matInput [(ngModel)]="nuevaPass">
+            </mat-form-field> 
+        </div> -->
+
+        
+
+
+
+    </div>
+
+
+    <div mat-dialog-actions>
+    <!-- <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-button (click)="onSave()">Guardar</button> -->
+    <button
+                    mat-stroked-button
+                    type="button"
+                    (click)="onCancel()">
+                    Cancelar
+                </button>
+
+    <button
+                    class="ml-4"
+                    mat-flat-button
+                    type="button"
+                    [color]="'primary'"
+                    (click)="onSave()"
+                    >Guardar
+                </button>
+    </div>
+
+</div>

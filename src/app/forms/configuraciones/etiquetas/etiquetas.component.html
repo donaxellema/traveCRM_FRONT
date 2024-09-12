@@ -1,0 +1,213 @@
+<div class="w-full max-w-3xl">
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 ">
+        <!-- Loader -->
+        <div
+            class="absolute inset-x-0 bottom-0"
+            *ngIf="isLoading">
+            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+        </div>
+        <!-- <div
+            class="absolute inset-x-0 bottom-0">
+            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+        </div> -->
+        <!-- Title -->
+        <!-- <div class="text-4xl font-extrabold tracking-tight">Inventory</div> -->
+        <!-- Actions -->
+        <div class="flex  w-full">
+            <!-- Search -->
+            <mat-form-field 
+                class="fuse-mat-dense fuse-mat-rounded w-full  "
+                [subscriptSizing]="'dynamic'">
+                <mat-icon
+                    class="icon-size-5"
+                    matPrefix
+                    [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                <input
+                    matInput
+                    [formControl]="searchInputControl"
+                    [autocomplete]="'off'"
+                    [placeholder]="'Buscar etiquetas'"
+                    
+                    [(ngModel)]="searchTerm" (input)="onSearchChange(searchTerm)"
+                    >
+                
+
+
+
+                    <button mat-icon-button (click)="dialogoPostEtiqueta()">
+                        <mat-icon
+                            class="text-hint"
+                            [svgIcon]="'heroicons_outline:plus-circle'"
+                            ></mat-icon>
+                    </button>
+            </mat-form-field>
+
+<!--             <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange(searchTerm)" placeholder="Buscar..." />
+ -->
+            <!-- Add product button -->
+            <!-- <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="createProduct()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">Add</span>
+            </button> -->
+        </div>
+    </div>
+    
+
+
+
+    <div class="flex flex-col mt-8 divide-y border-t border-b">
+        <ng-container *ngFor="let etiqueta of etiquetasCambiantes | async ;trackBy: trackByFn;">
+            <div class="flex flex-col sm:flex-row sm:items-center py-8">
+                <div class="flex items-center">
+                                <div class=" w-15 h-10  flex-0 container ml-4 items-center">
+                                    <div class="circle" [ngStyle]="{ 'background-color': etiqueta.etiq_color }"></div>
+                                    
+                                    <!-- <input type="color" [value]="etiqueta.etiq_color" (input)="updateColor($event.target.etiqueta.etiq_color)"> -->
+                                </div>
+                                    
+                    <div class="ml-4">
+                        <div class="font-medium">{{etiqueta.etiq_nombre}}</div>
+                        <div class="text-secondary">{{etiqueta.etiq_descrip}}</div>
+                    </div>
+                </div>
+                <div class="flex items-center mt-4 sm:mt-0 sm:ml-auto">
+                    <div class="order-2 sm:order-1 ml-4 sm:ml-0">
+                    </div>
+                    <div class="order-1 sm:order-2 sm:ml-3">
+                        <button mat-icon-button (click)="dialogoEtiqueta(etiqueta)">
+                            <mat-icon
+                                class="text-hint"
+                                [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="dialogoEliminarEtiqueta(etiqueta.etiq_id)" >
+                            <mat-icon
+                                class="text-hint"
+                                [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- <mat-paginator
+    [length]="paginatorLength"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator> -->
+
+    <mat-paginator
+    #paginadorEtiquetas
+    [length]="totalElementos"
+    [pageSize]="limit"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="pageEvent = getServerData($event)"
+    >
+    </mat-paginator>
+
+
+
+    <!-- <div class="w-full">
+        <mat-form-field
+            class="w-full"
+            [subscriptSizing]="'dynamic'">
+            <mat-label>Busca etiquetas</mat-label>
+            <mat-icon
+                class="icon-size-5"
+                [svgIcon]="'heroicons_solid:magnifying-glass'"
+                matPrefix></mat-icon>
+            <input
+                matInput
+                [placeholder]="'Etiquetas'">
+            <button
+                mat-icon-button
+                matSuffix>
+                <mat-icon
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_solid:plus-circle'"></mat-icon>
+            </button>
+        </mat-form-field>
+    </div> -->
+    
+
+    <!-- Form -->
+    <!-- <form [formGroup]="accountForm">
+
+        <div class="w-full">
+            <div class="text-xl">Configuraciones</div>
+            <div class="text-secondary">Las configuraciones de esta seccion son muy sencibles!</div>
+        </div>
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-label>Nombe Etiqueta </mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:key'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'accountsid'"
+                        matInput>
+                </mat-form-field>
+            </div>
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-label>Token</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:code-bracket-square'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'token'"
+                        matInput>
+                </mat-form-field>
+            </div>
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-label>Telefono</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:device-phone-mobile'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'telefono'"
+                        matInput>
+                </mat-form-field>
+            </div>
+            
+        </div>
+
+
+        <div class="mt-11 mb-10 border-t"></div>
+
+        <div class="flex items-center justify-end">
+            <button
+                mat-stroked-button
+                type="button">
+                Cancelar
+            </button>
+            <button
+                class="ml-4"
+                mat-flat-button
+                type="button"
+                [color]="'primary'">Guardar
+            </button>
+        </div>
+    </form> -->
+
+</div>
+
+
+
+
+

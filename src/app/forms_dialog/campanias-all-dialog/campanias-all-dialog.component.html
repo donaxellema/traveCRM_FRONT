@@ -1,0 +1,104 @@
+<div class="w-full max-w-3xl">
+
+    <!-- Form -->
+
+
+    <div class="w-full">
+        <div class="text-xl">Campañas existentes  </div>
+    </div>
+<!-- <div class="w-full pl-11 pr-12 flex py-8 " mat-dialog-content>
+    <mat-form-field class="flex-auto">
+        <mat-label>Buscar persona</mat-label>
+        <input  
+        placeholder="Buscar por nombres o cedula"
+        [(ngModel)]="searchTerm" (input)="onSearchChange(searchTerm)" 
+        matInput 
+        placeholder="Buscar por nombres " >
+    </mat-form-field>
+    
+</div> -->
+
+
+<!-- <div class="w-full pl-11 pr-12 py-8"> -->
+<div class="w-full pl-11 pr-12 "> 
+<!-- <mat-form-field class="w-full">
+    <mat-label>Filter</mat-label>
+    <input style="width: 100%;" placeholder="Buscar por nombres o cedula" matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    <button>Agregar</button>
+</mat-form-field> -->
+
+
+    <div class="">
+        <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+        <thead class="bg-gray-50">
+            <tr>
+            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Etiqueta</th>
+            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Campanias</th>
+            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Fechas</th>
+            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Estado</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+            <tr *ngFor="let campaData of campaniasData" class="odd:bg-white even:bg-gray-50">
+            <th class="px-6 py-4 font-medium text-gray-900">{{campaData.camp_nombre}} </th>
+            <td class="px-6 py-4">{{campaData.camp_descripcion}} </td>
+            <td class="px-6 py-4"> {{campaData.camp_fecha_inicio}} -  {{campaData.camp_fecha_fin}}</td>
+
+            <td class="px-6 py-4" *ngIf="campaData.camp_estado=='Vigente'">
+                <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3 w-3">
+                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                </svg>
+                Vigente
+                </span>
+            </td>
+            
+            <td class="px-6 py-4" *ngIf="campaData.camp_estado=='Suspendido'">
+                <span class="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2 py-1 text-xs font-semibold text-orange-600">
+                
+                Suspendido
+                </span>
+            </td>
+            
+            <td class="px-6 py-4" *ngIf="campaData.camp_estado=='Vencida'">
+                <span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3 w-3">
+                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                    </svg>
+                    Vencida
+                </span>
+            </td>
+
+            
+            </tr>
+
+        </tbody>
+        </table>
+    </div>
+
+    <mat-paginator
+    #paginadorEtiquetas
+    [length]="totalElementos"
+    [pageSize]="limit"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="pageEvent = getServerData($event)"
+    >
+    </mat-paginator>
+
+</div>
+
+
+<div mat-dialog-actions>
+    <!-- <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-button (click)="onSave()">Guardar</button> -->
+    <button
+                  mat-stroked-button
+                  type="button"
+                  (click)="onCancel()">
+                  Cerrar
+              </button>
+  
+    
+  </div>
+
+  </div>    

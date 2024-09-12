@@ -1,0 +1,81 @@
+<div class="w-full max-w-3xl">
+
+    <!-- Form -->
+    <form [formGroup]="accountForm_1">
+
+        <!-- Section -->
+        <div class="w-full">
+            <div class="text-xl">Configuraciones</div>
+            <div class="text-secondary">Las configuraciones de esta seccion son muy sencibles!</div>
+        </div>
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <!-- Name -->
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-label>Account SID </mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:key'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'accountsid'"
+                        matInput>
+                </mat-form-field>
+            </div>
+            <!-- Username -->
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-label>Token</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:code-bracket-square'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'authtoken'"
+                        matInput>
+                </mat-form-field>
+            </div>
+            <!-- Title -->
+            <div class="sm:col-span-4">
+                <mat-form-field
+                    class="fuse-mat-emphasized-affix w-full"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-label>Telefono</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:device-phone-mobile'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'numtelephone'"
+                        matInput>
+                </mat-form-field>
+            </div>
+            
+        </div>
+
+
+        <!-- Divider -->
+        <div class="mt-11 mb-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+            <!-- <button
+                mat-stroked-button
+                type="button">
+                Cancelar
+            </button> -->
+            <button
+                class="ml-4"
+                mat-flat-button
+                type="button"
+                [color]="'primary'" 
+                (click)="updateCuentaTwilio()" >Guardar
+            </button>
+        </div>
+    </form>
+
+</div>
