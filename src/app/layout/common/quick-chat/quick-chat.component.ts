@@ -113,6 +113,7 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
 
         const dataA={ 
             opcion:"C_USU_ONLINE"
+            //opcion:"C"
         }
 
         this._AgentesServices.getAgentesY_PersonasEN_LINIEA(dataA).subscribe(
@@ -295,33 +296,23 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
         //alert(this.localStorage.pers_id)
         const obj={
             //chat_id:id,
-            pers_id_sender:this.localStorage.pers_id,
-            pers_id_receiver:this.pers_id_receiver,
-            opcion:'C_CHAT',
+            pers_id_sender:pers_id,
+            //pers_id_sender:this.localStorage.pers_id,
+            //pers_id_receiver:this.pers_id_receiver,
+            opcion:'H_W_CHAT',
             _limite:null,
             _offset:null
         }
-        this._ChatServices.getChats_BY_ID(obj).subscribe(
+        //this._ChatServices.getChats_BY_ID(obj).subscribe(
+        this._ChatServices.getChats_BY_ID_whatsapp(obj).subscribe(
             (response:any) => {
               //console.log(response)
               this.message_hist=response.data
               console.log(this.message_hist)
-             /*  this.accountForm_1.patchValue({
-                param_id: response.data.param_id,
-                param_tipo: response.data.param_tipo,
-                accountsid:  response.data.accountsid,
-                authtoken:  response.data.authtoken,
-                numtelephone: response.data.numtelephone
-            }); */
-              //this.router.navigate(['']);
-              //this.router.navigate(['/auth']);
             },
             (error) => {
                
                console.log(error);
-              /*  this._systemServices.showAlertError(error.error.error); */
-              //this.messageService.add({ severity: 'error', summary: 'Error!', detail: error.error.error });
-    
             }
           );
     }

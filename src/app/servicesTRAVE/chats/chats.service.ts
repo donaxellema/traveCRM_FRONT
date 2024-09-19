@@ -76,6 +76,35 @@ export class ChatsServiceCRM {
         return this.http.get(`${this.apiUrl}chat_by_id/`, { headers: headers, params: paramsSeteados });
     }
 
+    //EXTRAER TODOS LOS CHATS POR ID PERO DESDE WHATSAPP
+    getChats_BY_ID_whatsapp(data:any, prefix: string = ''): Observable<any> {
+        let paramsSeteados = new HttpParams();
+        console.log("data services")
+        console.log(data)
+        const appendParams = (obj: any, prefix: string = '') => {
+            for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const value = obj[key];
+                const paramKey = prefix ? `${prefix}.${key}` : key;
+                if (typeof value === 'object' && value !== null) {
+                appendParams(value, paramKey);
+                } else {
+                    paramsSeteados = paramsSeteados.set(paramKey, value);
+                }
+            }
+            }
+        };
+        
+        appendParams(data);
+        /* console.log("mi parametro seteado "+ paramsSeteados)
+        console.log("this.accessToken")
+        console.log(this.accessToken) */
+        let headers = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
+        return this.http.get(`${this.apiUrl}last_Chat_by_user/`, { headers: headers, params: paramsSeteados });
+    }
+
 
     // INSERTAR CHATS_DIRECTO SIN WHATSAPP => mensajes internos 
     postMensajes(data:any): Observable<any> {

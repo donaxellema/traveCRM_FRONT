@@ -115,10 +115,11 @@
                                 <ng-container *ngIf="!chat.usu_imagen">
                                     <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                                         <!-- {{chat.contact.name.charAt(0)}} --> 
-                                        {{chat.nombres_usu}} 
-                                        <!-- {{chat.contact.name.charAt(0)}} --> 
+                                        <!-- {{chat.nombres_usu}} --> 
+                                        {{chat.nombres_usu.charAt(0)}} 
                                          <!-- asa -->
                                          <!-- {{chatBDD.usu_imagen}} -->
+                                          <!-- holaaaa -->
                                     </div>
                                 </ng-container>
                             </div>
@@ -224,7 +225,7 @@
                     </div>
                     {{mensaje}}
                     <!-- Message field -->
-                    <div class="flex items-end p-4 border-t bg-gray-50 dark:bg-transparent">
+                    <!-- <div class="flex items-end p-4 border-t bg-gray-50 dark:bg-transparent">
                         <mat-form-field
                             class="fuse-mat-dense fuse-mat-rounded fuse-mat-bold w-full"
                             [subscriptSizing]="'dynamic'">
@@ -241,7 +242,7 @@
                                 <mat-icon [svgIcon]="'heroicons_outline:paper-airplane'"></mat-icon>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                 </ng-container>
             </div>
 
@@ -260,7 +261,7 @@
     </div>
 
     <!-- Message field -->
-    <div class="flex items-end p-4 border-t bg-gray-50 dark:bg-transparent">
+    <!-- <div class="flex items-end p-4 border-t bg-gray-50 dark:bg-transparent">
         <mat-form-field
             class="fuse-mat-dense fuse-mat-rounded fuse-mat-bold w-full"
             [subscriptSizing]="'dynamic'">
@@ -277,7 +278,7 @@
                 <mat-icon [svgIcon]="'heroicons_outline:paper-airplane'"></mat-icon>
             </button>
         </div>
-    </div>
+    </div> -->
 </ng-template>
 
 <!-- Speech bubble tail SVG -->
