@@ -124,6 +124,7 @@ export const appRoutes: Route[] = [
                 {path: 'agentes', loadChildren: () => import('app/forms/agentes/agentes.routes')},
                 {path: 'personas', loadChildren: () => import('app/forms/personas/personas.routes')},
                 {path: 'settings', loadChildren: () => import('app/forms/configuraciones/configuraciones.routes')},
+                {path: 'chats', loadChildren: () => import('app/forms/chat/chat.routes')},
             ]},
 
         ]

@@ -19,6 +19,8 @@ import { Router } from '@angular/router';
 import { AgentesServiceCRM } from 'app/servicesTRAVE/agentes/agentes.service';
 
 import {global} from '../../../app/servicesTRAVE/global';
+import { ChatComponent } from "../chat/chat.component";
+
 //import {global} from '../../../app/servicesTRAVE';
 
 
@@ -36,8 +38,8 @@ import {global} from '../../../app/servicesTRAVE/global';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports        : [TranslocoModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, 
-    MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe],
+  imports: [TranslocoModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule,
+    MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe, ChatComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

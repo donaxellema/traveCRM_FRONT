@@ -131,6 +131,8 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
       
               }
         )
+
+        
         // Chat
         this._quickChatService.chat$
             .pipe(takeUntil(this._unsubscribeAll))

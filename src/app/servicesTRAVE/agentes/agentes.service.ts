@@ -273,6 +273,36 @@ export class AgentesServiceCRM {
           .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
       return this.http.get(`${this.apiUrl}agentes_on_line/`, { headers: headers, params: paramsSeteados });
   }
+    
+  
+  //CARGA DE USUARIOS EN LINEA CON EL ULTIMO MENSAJE ENVIADO
+    getAgentesY_Mensaje(data:any, prefix: string = ''): Observable<any> {
+      let paramsSeteados = new HttpParams();
+      console.log("data services")
+      console.log(data)
+  
+      
+      const appendParams = (obj: any, prefix: string = '') => {
+          for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              const value = obj[key];
+              const paramKey = prefix ? `${prefix}.${key}` : key;
+              if (typeof value === 'object' && value !== null) {
+                appendParams(value, paramKey);
+              } else {
+                  paramsSeteados = paramsSeteados.set(paramKey, value);
+              }
+            }
+          }
+        };
+      
+      appendParams(data);
+        console.log(this.accessToken)
+      let headers = new HttpHeaders()
+          .set('Content-Type', 'application/json')
+          .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
+      return this.http.get(`${this.apiUrl}agentes_with_message/`, { headers: headers, params: paramsSeteados });
+  }
 
 
 
