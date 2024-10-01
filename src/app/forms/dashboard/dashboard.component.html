@@ -250,9 +250,12 @@
                                     </div>
                                     <!-- Email & Phone -->
                                     <div class="flex items-center w-full border-t divide-x">
+                                        {{member.pers_id}}
                                         <a
                                             class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
-                                            [href]="">
+                                            [href]="'pages/chats'"
+                                            (click)="setIdPersona(member.pers_id)" 
+                                            >
                                         <!-- <a
                                             class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
                                             [href]="'mailto:' + member.usu_email"> -->

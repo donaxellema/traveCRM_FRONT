@@ -12,12 +12,13 @@
 
             <!-- New chat -->
             <ng-container *ngIf="drawerComponent === 'new-chat'">
-                <chat-new-chat [drawer]="drawer"></chat-new-chat>
+                
+                <chat-new-chat [drawer]="drawer" ></chat-new-chat>
             </ng-container>
-
+            
             <!-- Profile -->
             <ng-container *ngIf="drawerComponent === 'profile'">
-                <chat-profile [drawer]="drawer"></chat-profile>
+                <chat-profile [drawer]="drawer" [dataProfile]="profileN"></chat-profile>
             </ng-container>
 
         </mat-drawer>
@@ -36,27 +37,27 @@
                                 class="flex items-center mr-1 cursor-pointer"
                                 (click)="openProfile()">
                                 <div class="w-10 h-10">
-                                    <ng-container *ngIf="profileN.avatar">
+                                    <ng-container *ngIf="profileN.usu_imagen">
                                         <img
                                             class="object-cover w-full h-full rounded-full object-cover"
-                                            [src]="profileN.avatar"
+                                            src="{{urlImagen}}/{{profileN?.usu_imagen}}"
                                             alt="Profile avatar"/>
                                     </ng-container>
-                                    <ng-container *ngIf="!profileN.avatar">
+                                    <ng-container *ngIf="!profileN?.usu_imagen">
                                         <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                                            {{profileN.name.charAt(0)}}
+                                            {{profileN?.pers_nombres}} 
                                         </div>
                                     </ng-container>
                                 </div>
-                                <div class="ml-4 font-medium truncate">{{profileN.name}}</div>
+                                <div class="ml-4 font-medium truncate">{{profileN?.pers_nombres}} {{profileN?.pers_apellidos}}</div>
                             </div>
-                            <button
+                            <!-- <button
                                 class="ml-auto"
                                 mat-icon-button
                                 (click)="openNewChat()">
                                 <mat-icon [svgIcon]="'heroicons_outline:plus-circle'"></mat-icon>
-                            </button>
-                            <button
+                            </button> -->
+                            <!-- <button
                                 class="ml-1 -mr-4"
                                 mat-icon-button
                                 [matMenuTriggerFor]="chatsHeaderMenu">
@@ -89,7 +90,7 @@
                                         Settings
                                     </button>
                                 </mat-menu>
-                            </button>
+                            </button> -->
                         </div>
                         <!-- Search -->
                         <div class="mt-4">
@@ -120,7 +121,8 @@
                                     class="z-20 flex items-center py-5 px-8 cursor-pointer border-b"
                                     [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedChatN || selectedChatN.id !== chat.pers_id,
                                                 'bg-primary-50 dark:bg-hover': selectedChatN && selectedChatN.pers_id === chat.pers_id }"
-                                    [routerLink]="[chat.pers_id]">
+                                    [routerLink]="[ chat.chat_id,pers_id,chat.pers_usu[0].pers_id]"> 
+                                    <!-- [chat.pers_id, chat.userId] -->
                                     <div class="relative flex flex-0 items-center justify-center w-10 h-10">
                                         <ng-container *ngIf="chat.unreadCount > 0">
                                             <div
@@ -130,26 +132,32 @@
                                         <ng-container *ngIf="chat.usu_imagen">
                                             <img
                                                 class="w-full h-full rounded-full object-cover"
-                                                [src]="chat.usu_imagen"
+                                                src="{{urlImagen}}/{{chat.usu_imagen}}"
                                                 alt="Contact avatar"/>
                                         </ng-container>
-                                        <ng-container *ngIf="!usu_imagen">
+                                        <ng-container *ngIf="!chat.usu_imagen">
                                             <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                                                 {{chat.nombres_usu.charAt(0)}}
                                             </div>
                                         </ng-container>
                                     </div>
                                     <div class="min-w-0 ml-4">
-                                        <div class="font-medium leading-5 truncate">{{chat.pers_nombres}}</div>
-                                        <div
+                                        <div class="font-medium leading-5 truncate">{{chat.nombres_usu}} </div>
+                                        <div  *ngIf="!chat?.mensajes?.[0]?.msg_contenido"
                                             class="leading-5 truncate text-secondary"
                                             [class.text-primary]="chat.unreadCount > 0"
                                             [class.dark:text-primary-500]="chat.unreadCount > 0">
-                                            {{chat.lastMessage}}
+                                            Contenido no disponible
+                                        </div>
+                                        <div  *ngIf="chat?.mensajes?.[0]?.msg_contenido"
+                                            class="leading-5 truncate text-secondary"
+                                            [class.text-primary]="chat.unreadCount > 0"
+                                            [class.dark:text-primary-500]="chat.unreadCount > 0">
+                                            {{chat.mensajes[0].msg_contenido}}
                                         </div>
                                     </div>
                                     <div class="flex flex-col items-end self-start ml-auto pl-2">
-                                        <div class="text-sm leading-5 text-secondary">{{chat.lastMessageAt}}</div>
+                                        <div class="text-sm leading-5 text-secondary">{{chat.mensajes?.[0]?.msg_fchreg }}</div>
                                         <ng-container *ngIf="chat.muted">
                                             <mat-icon
                                                 class="icon-size-5 text-hint"
@@ -219,7 +227,8 @@
             </ng-template>
 
             <!-- Conversation -->
-            <ng-container *ngIf="chats && chatsN.length > 0">
+            
+            <ng-container *ngIf="chatsN && chatsN.length > 0">
                 <div
                     class="flex-auto border-l"
                     [ngClass]="{'z-20 absolute inset-0 lg:static lg:inset-auto flex': selectedChatN && selectedChatN.pers_id ,

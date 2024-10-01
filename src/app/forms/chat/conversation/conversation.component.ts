@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 //import { ChatService } from 'app/modules/admin/apps/chat/chat.service';
 
@@ -16,7 +16,8 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Subject, takeUntil } from 'rxjs';
 import { ChatService } from '../chat.service';
 import { ContactInfoComponent } from '../contact-info/contact-info.component';
-import { Chat } from '../chat.types';
+import { Chat, ContactUser } from '../chat.types';
+import {global} from './../../../servicesTRAVE/global';
 
 @Component({
     selector       : 'chat-conversation',
@@ -28,12 +29,19 @@ import { Chat } from '../chat.types';
 })
 export class ConversationComponent implements OnInit, OnDestroy
 {
+    public urlImagen = global.urlImagen;
+
     @ViewChild('messageInput') messageInput: ElementRef;
-    chat: Chat;
+    _chat: Chat;
+    chat: any;
+    contactUsu: ContactUser;
+    data_Usu: any;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+
+    chatId: string | null = null;
     /**
      * Constructor
      */
@@ -42,6 +50,8 @@ export class ConversationComponent implements OnInit, OnDestroy
         private _chatService: ChatService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _ngZone: NgZone,
+
+        private route: ActivatedRoute
     )
     {
     }
@@ -86,15 +96,37 @@ export class ConversationComponent implements OnInit, OnDestroy
     /**
      * On init
      */
+    mensajes:any;
     ngOnInit(): void
     {
+        this.route.data
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data) => {
+            // Aquí es donde recibes el chat resuelto
+            this.chat = data['conversation']; // 'conversation' es el nombre que diste en el resolve
+            //this.chat_Usu=this.chat.data;
+            this.contactUsu= this.chat.data_sender;
+            this.mensajes=this.chat.data;
+            console.log("Chat resuelto : contactUsu :", this.contactUsu);
+            console.log("Chat resuelto:", this.chat);
+            //console.log("Chat resuelto chat_Usu : ", this.chat_Usu);
+            //console.log("Chat resuelto data_Usu: ", this.data_Usu);
+
+            // Marcar para revisión
+            this._changeDetectorRef.markForCheck();
+        });
+
+
+
+
         // Chat
         this._chatService.chat$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((chat: Chat) =>
             {
                 this.chat = chat;
-
+                console.log("this.chat 97 desde el componente")
+                console.log(this.chat)
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });

@@ -242,6 +242,18 @@ export class ChatsServiceCRM {
         return this.http.get(`${this.apiUrl}clientes/`, { headers: headers, params: paramsSeteados });
     }
 
+
+    //para extraer la conversacion completa
+
+    getChatByIDConversation(data){
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+            .set('Authorization', (this.accessToken != null) ? this.accessToken : '');
+        let httpParams = new HttpParams()
+            //.set("id", id)
+        return this.http.post(`${this.apiUrl}messages_by_chat/`, data,{ headers: headers, params: httpParams });
+    }
+
+
   /**
      * Sign in using the access token
      */

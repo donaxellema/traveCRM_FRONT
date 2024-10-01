@@ -20,6 +20,7 @@ import { AgentesServiceCRM } from 'app/servicesTRAVE/agentes/agentes.service';
 
 import {global} from '../../../app/servicesTRAVE/global';
 import { ChatComponent } from "../chat/chat.component";
+import { PersonaObservableCRM } from 'app/servicesTRAVE/observables/chats/chat.service';
 
 //import {global} from '../../../app/servicesTRAVE';
 
@@ -64,6 +65,7 @@ export class DashboardComponent implements OnInit, OnDestroy
         //private _projectService: ProjectService,
         private _router: Router,
         private _AgentesServices: AgentesServiceCRM,
+        private _personaObservableServices: PersonaObservableCRM,
 
     )
     {
@@ -113,6 +115,10 @@ export class DashboardComponent implements OnInit, OnDestroy
         this.cargarAgentes();
     }
 
+    //funcion para actualizar el observable 
+    setIdPersona(id:any){
+        this._personaObservableServices.setId_Persona(id);
+    }
 
 
     public agentesBDD:any;

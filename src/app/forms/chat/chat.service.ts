@@ -201,4 +201,5 @@ export class ChatService
     {
         this._chat.next(null);
     }
+    
 }

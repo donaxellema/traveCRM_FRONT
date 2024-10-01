@@ -9,6 +9,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 // import { ChatService } from 'app/modules/admin/apps/chat/chat.service';
 //import { Profile } from 'app/modules/admin/apps/chat/chat.types';
 
+import {global} from './../../../servicesTRAVE/global';
 import { ChatService } from 'app/forms/chat/chat.service';
 import { Profile } from 'app/forms/chat/chat.types';
 import { Subject, takeUntil } from 'rxjs';
@@ -23,8 +24,11 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ProfileComponent implements OnInit, OnDestroy
 {
+    public urlImagen = global.urlImagen;
+    @Input() dataProfile: any;
     @Input() drawer: MatDrawer;
-    profile: Profile;
+    _profile: Profile;
+    profile: any;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -43,13 +47,24 @@ export class ProfileComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        console.log("this.dataProfile desde el perfil")
+        console.log(this.dataProfile)
         // Profile
-        this._chatService.profile$
+        this.profile=this.dataProfile;
+        console.log("this.profile")
+        console.log(this.profile)
+        /* this._chatService.profile$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((dataProfile: any) =>
+            {
+                this.profile = dataProfile;
+            }); */
+        /* this._chatService.profile$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((profile: Profile) =>
             {
                 this.profile = profile;
-            });
+            }); */
     }
 
     /**

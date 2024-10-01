@@ -10,9 +10,11 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 
 
 import { ChatService } from 'app/forms/chat/chat.service';
-import { Chat, ChatNew, Profile } from 'app/forms/chat/chat.types';
+import { Chat, ChatNew, Profile, ProfileN } from 'app/forms/chat/chat.types';
 import { NewChatComponent } from '../new-chat/new-chat.component';
 import { ProfileComponent } from '../profile/profile.component';
+
+import { Observable } from 'rxjs';
 
 //import { ChatService } from 'app/modules/admin/apps/chat/chat.service';
 //import { Chat, Profile } from 'app/modules/admin/apps/chat/chat.types';
@@ -22,6 +24,8 @@ import { ProfileComponent } from '../profile/profile.component';
 
 import { Subject, takeUntil } from 'rxjs';
 import { AgentesServiceCRM } from 'app/servicesTRAVE/agentes/agentes.service';
+import { PersonaObservableCRM } from 'app/servicesTRAVE/observables/chats/chat.service';
+import {global} from './../../../servicesTRAVE/global';
 
 @Component({
     selector       : 'chat-chats',
@@ -33,6 +37,7 @@ import { AgentesServiceCRM } from 'app/servicesTRAVE/agentes/agentes.service';
 })
 export class ChatsComponent implements OnInit, OnDestroy
 {
+    public urlImagen = global.urlImagen;
     chats: Chat[];
     chatsN: ChatNew[];
     drawerComponent: 'profile' | 'new-chat';
@@ -50,7 +55,8 @@ export class ChatsComponent implements OnInit, OnDestroy
     constructor(
         private _chatService: ChatService,
         private _changeDetectorRef: ChangeDetectorRef,
-        private _AgentesServices:AgentesServiceCRM
+        private _AgentesServices:AgentesServiceCRM,
+        private _personaObservableServices: PersonaObservableCRM
     )
     {}
 
@@ -58,20 +64,31 @@ export class ChatsComponent implements OnInit, OnDestroy
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
-    profileN={
+    /* profileN={
         name:'Nombre example',
         email:'example@gmail.com',
         avatar:'imagen.jpg',
         about:'example asasdasd'
-    }
+    } */
+    profileN:any;
     
     
     /**
      * On init
      */
     public chatBDD:any;
+    public pers_id:any;
+    
+    public data_usu_sender:any;
+    public data_chats:any;
+    public data_mensaje_by_chat:any;
     ngOnInit(): void
     {
+          this._personaObservableServices.getId_Persona().subscribe((id:any) => {
+            this.pers_id=id;
+          });
+
+
         // Chats
         
             this._chatService.chats$
@@ -114,27 +131,58 @@ export class ChatsComponent implements OnInit, OnDestroy
                 lastMessage:'Ultimo mensaje',
                 muted:false,
                 lastMessageAt:'26/04/2024'
+            },
+            {
+                pers_id:11,
+                nombres_usu:'Sarbina Piedra',
+                pers_nombres:'Sarbina',
+                pers_apellidos:'Piedra',
+                usu_imagen:null,
+                unreadCount:0,
+                lastMessage:'Ultimo mensaje',
+                muted:false,
+                lastMessageAt:'26/04/2024'
+            },
+            {
+                pers_id:"ff6bc7f1-449a-4419-af62-b89ce6cae0aa",
+                nombres_usu:'El pepe',
+                pers_nombres:'PEpe',
+                pers_apellidos:'Piedra',
+                usu_imagen:null,
+                unreadCount:0,
+                lastMessage:'Ultimo mensaje',
+                muted:false,
+                lastMessageAt:'26/04/2024'
             }
         ]
-            /* const dataA={ 
-                opcion:"C_USU_ONLINE_MESSAGE"
+            const dataA={ 
+                opcion:"C_LIST_CHAT_BY_USER",
+                pers_id:this.pers_id
                 //opcion:"C"
             }
     
             this._AgentesServices.getAgentesY_Mensaje(dataA).subscribe(
                 (response:any) => {
-                    console.log("response")
+                    console.log("response++++++++++++++++")
                     console.log(response)
+                    this.profileN=response.data_sender;
+                    console.log("this.profileN")
+                    console.log(this.profileN)
+                    //this.data_usu_sender=response.data_sender[0];
+                    this.data_chats= response.data
+                    console.log("mi consola aaa this.data_chats");
+                    console.log(this.data_chats);
                     //this.chats = this.filteredChats = response.data;
                     this.chatsN = this.filteredChatsN = response.data;
-                    console.log("this.chatsN 94")
-                    console.log(this.chatsN)
+                    //this.chatsN = this.filteredChatsN = response.data;
+                    /* console.log("this.chatsN 94")
+                    console.log(this.chatsN) */
                   },
                   (error) => {
                      
           
                   }
-            ) */
+            )
 
         
 
@@ -148,21 +196,44 @@ export class ChatsComponent implements OnInit, OnDestroy
                 this.profile = profile;
 
                 // Mark for check
+                console.log("this.selectedChat 151");
                 this._changeDetectorRef.markForCheck();
             });
 
         // Selected chat
-        this._chatService.chat$
+        /* this._chatService.chat$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chat: Chat) =>
+            .subscribe((chat: ChatNew) =>
             {
-                this.selectedChat = chat;
-                console.log("this.selectedChat 116");
-                console.log(this.selectedChat);
+                console.log("160"+chat);
+                this.selectedChatN = chat;
+                console.log("this.selectedChat 161");
+                console.log(this.selectedChatN);
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
-            });
+            }); */
+
+
+            this.getIdPersona();
     }
+
+
+
+    //funcion para actualizar el observable 
+    getIdPersona(){
+        this._personaObservableServices.getId_Persona().subscribe({
+            next:(reveidData)=>{
+                console.log(reveidData)
+            }
+        })
+    }
+
+    getChats_byChat(){
+
+    }
+
+
+
 
     /**
      * On destroy

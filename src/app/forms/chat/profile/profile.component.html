@@ -19,15 +19,16 @@
                     [svgIcon]="'heroicons_outline:camera'"></mat-icon>
                 <div class="mt-2 mx-6 font-medium text-center text-white">Change Profile Photo</div>
             </div>
-            <ng-container *ngIf="profile.avatar">
+            <ng-container *ngIf="profile.usu_imagen">
                 <img
                     class="w-full h-full rounded-full object-cover"
-                    [src]="profile.avatar"
+                    
+                    src="{{urlImagen}}/{{profile.usu_imagen}}"
                     [alt]="'Profile avatar'">
             </ng-container>
-            <ng-container *ngIf="!profile.avatar">
+            <ng-container *ngIf="!profile.usu_imagen">
                 <div class="flex items-center justify-center w-full h-full rounded-full text-8xl font-semibold uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                    {{profile.name.charAt(0)}}
+                    {{profile.pers_nombres.charAt(0)}}
                 </div>
             </ng-container>
         </div>
@@ -35,14 +36,14 @@
         <!-- Profile info -->
         <div class="flex flex-col mt-8 mx-2">
             <mat-form-field>
-                <mat-label>Name</mat-label>
+                <mat-label>Nombre</mat-label>
                 <mat-icon
                     class="icon-size-5"
                     matPrefix
                     [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
                 <input
                     matInput
-                    [ngModel]="profile.name">
+                    [(ngModel)]="profile.pers_nombres">
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Email</mat-label>
@@ -52,7 +53,7 @@
                     [svgIcon]="'heroicons_solid:envelope'"></mat-icon>
                 <input
                     matInput
-                    [ngModel]="profile.email">
+                    [(ngModel)]="profile.pers_email">
             </mat-form-field>
             <mat-form-field>
                 <mat-label>About</mat-label>
@@ -62,7 +63,7 @@
                     [svgIcon]="'heroicons_solid:identification'"></mat-icon>
                 <input
                     matInput
-                    [ngModel]="profile.about">
+                    [ngModel]="profile.usu_descripcion">
             </mat-form-field>
             <div class="flex items-center justify-end mt-4">
                 <button

@@ -16,6 +16,7 @@ import { EmptyConversationComponent } from './empty-conversation/empty-conversat
 //import { EmptyConversationComponent } from 'app/modules/admin/apps/chat/empty-conversation/empty-conversation.component';
 
 import { catchError, throwError } from 'rxjs';
+import { ChatsServiceCRM } from 'app/servicesTRAVE/chats/chats.service';
 
 /**
  * Conversation resolver
@@ -25,10 +26,21 @@ import { catchError, throwError } from 'rxjs';
  */
 const conversationResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
 {
-    const chatService = inject(ChatService);
+    const _chatService = inject(ChatService);
+    const chatService = inject(ChatsServiceCRM);
     const router = inject(Router);
+    console.log('id + 30 ');
+    console.log(route.paramMap.get('pers_id'));
+    
 
-    return chatService.getChatById(route.paramMap.get('id')).pipe(
+    
+    return chatService.getChatByIDConversation(
+        { 
+            pers_id: route.paramMap.get('pers_id'),
+            chat_id: route.paramMap.get('chat_id'),
+            opcion:'C_LIST_MESSAGES_BY_CHAT',
+            pers_sender: route.paramMap.get('pers_sender')
+        }).pipe(
         // Error here means the requested chat is not available
         catchError((error) =>
         {
@@ -45,6 +57,23 @@ const conversationResolver = (route: ActivatedRouteSnapshot, state: RouterStateS
             return throwError(error);
         }),
     );
+    /* return chatService.getChatById(route.paramMap.get('id')).pipe(
+        // Error here means the requested chat is not available
+        catchError((error) =>
+        {
+            // Log the error
+            console.error(error);
+
+            // Get the parent url
+            const parentUrl = state.url.split('/').slice(0, -1).join('/');
+
+            // Navigate to there
+            router.navigateByUrl(parentUrl);
+
+            // Throw an error
+            return throwError(error);
+        }),
+    ); */
 };
 
 export default [
@@ -67,7 +96,7 @@ export default [
                         component: EmptyConversationComponent,
                     },
                     {
-                        path     : ':id',
+                        path     : ':chat_id/:pers_id/:pers_sender',
                         component: ConversationComponent,
                         resolve  : {
                             conversation: conversationResolver,

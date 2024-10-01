@@ -3,8 +3,9 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDrawer } from '@angular/material/sidenav';
-import { Chat } from '../chat.types';
+import { Chat, ContactUser } from '../chat.types';
 // import { Chat } from 'app/modules/admin/apps/chat/chat.types';
+import {global} from './../../../servicesTRAVE/global';
 
 @Component({
     selector       : 'chat-contact-info',
@@ -16,7 +17,10 @@ import { Chat } from '../chat.types';
 })
 export class ContactInfoComponent
 {
-    @Input() chat: Chat;
+    public urlImagen = global.urlImagen;
+
+    //@Input() chat: Chat;
+    @Input() chat: ContactUser;
     @Input() drawer: MatDrawer;
 
     /**
