@@ -50,8 +50,6 @@ export class ChatsServiceCRM {
 //EXTRAER TODOS LOS CHATS POR ID
     getChats_BY_ID(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
         const appendParams = (obj: any, prefix: string = '') => {
             for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
@@ -67,9 +65,6 @@ export class ChatsServiceCRM {
         };
         
         appendParams(data);
-        /* console.log("mi parametro seteado "+ paramsSeteados)
-        console.log("this.accessToken")
-        console.log(this.accessToken) */
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -79,8 +74,6 @@ export class ChatsServiceCRM {
     //EXTRAER TODOS LOS CHATS POR ID PERO DESDE WHATSAPP
     getChats_BY_ID_whatsapp(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
         const appendParams = (obj: any, prefix: string = '') => {
             for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
@@ -96,9 +89,6 @@ export class ChatsServiceCRM {
         };
         
         appendParams(data);
-        /* console.log("mi parametro seteado "+ paramsSeteados)
-        console.log("this.accessToken")
-        console.log(this.accessToken) */
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -151,8 +141,6 @@ export class ChatsServiceCRM {
 
     getClientesYPersonasBY_ID(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
     
         
         const appendParams = (obj: any, prefix: string = '') => {
@@ -170,9 +158,6 @@ export class ChatsServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -183,8 +168,6 @@ export class ChatsServiceCRM {
     
     getClientesYPersonasSearch(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
     
         
         const appendParams = (obj: any, prefix: string = '') => {
@@ -202,9 +185,6 @@ export class ChatsServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -216,8 +196,6 @@ export class ChatsServiceCRM {
     
     getClientesY_Personas(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
     
         
         const appendParams = (obj: any, prefix: string = '') => {
@@ -235,7 +213,6 @@ export class ChatsServiceCRM {
           };
         
         appendParams(data);
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');

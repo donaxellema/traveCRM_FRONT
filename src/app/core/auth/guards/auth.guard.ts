@@ -11,7 +11,6 @@ export const AuthGuard: CanActivateFn | CanActivateChildFn = (route, state) =>
     const router: Router = inject(Router);
     const _authenticated=  localStorage.getItem('authenticated');
     var _authval: boolean=false;
-    console.log("linea 14 "+_authenticated)
     if(_authenticated =="true")
     {
         _authval=true;
@@ -20,8 +19,6 @@ export const AuthGuard: CanActivateFn | CanActivateChildFn = (route, state) =>
     return inject(AuthServiceCRM).check().pipe(
         switchMap((authenticated) =>
         {
-            console.log("authenticated")
-            console.log(authenticated)
             // If the user is not authenticated...
             if ( authenticated != true )
             {

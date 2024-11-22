@@ -105,7 +105,7 @@ export class CampaniasDialogComponent {
     const obj={
       etiq_id:"",
       opcion:"C",
-      _limite:this.limit,
+      _limite:100,
       _offset:this.offset
   }
     
@@ -130,7 +130,8 @@ export class CampaniasDialogComponent {
     this.data.etiq_id=this.seleccionado;
     if(this.tipoDialog=='Editar'){
       this.data.etiq_id=this.etiquetaSeleccionada
-      this.data.camp_fotoCampania=this.urlImagendesdeServer
+      this.data.camp_fotoCampania=[{src:this.urlImagendesdeServer}]
+      //this.urlImagendesdeServer=this.data.camp_fotoCampania[0].src
       const objeto = {
         data:this.data,
         opcion:'U',

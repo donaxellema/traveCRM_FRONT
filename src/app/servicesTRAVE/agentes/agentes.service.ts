@@ -46,52 +46,6 @@ export class AgentesServiceCRM {
 }
   
 
-
-    /* 
-
-
-    getPersonas(data:any, prefix: string = ''): Observable<any> {
-        let paramsSeteados = new HttpParams();
-    
-        
-        const appendParams = (obj: any, prefix: string = '') => {
-            for (const key in obj) {
-              if (obj.hasOwnProperty(key)) {
-                const value = obj[key];
-                const paramKey = prefix ? `${prefix}.${key}` : key;
-                if (typeof value === 'object' && value !== null) {
-                  appendParams(value, paramKey);
-                } else {
-                    paramsSeteados = paramsSeteados.set(paramKey, value);
-                }
-              }
-            }
-          };
-        
-        appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
-        let headers = new HttpHeaders()
-            .set('Content-Type', 'application/json')
-            .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
-        return this.http.get(`${this.apiUrl}agentes/`, { headers: headers, params: paramsSeteados });
-    }
-     */
-    
-
-    /*
-    
-    
-    
-    deleteAgentes(data:any): Observable<any> {
-        let headers = new HttpHeaders().set('Content-Type', 'application/json')
-            .set('Authorization', (this.accessToken != null) ? this.accessToken : '');
-        let httpParams = new HttpParams()
-            //.set("id", id)
-        return this.http.post(`${this.apiUrl}agentesDelete/`, data,{ headers: headers, params: httpParams });
-    } */
-
     // DELETE AGENTES 
     postDELETEAgentes(data:any): Observable<any> {
       let headers = new HttpHeaders().set('Content-Type', 'application/json')
@@ -105,8 +59,6 @@ export class AgentesServiceCRM {
     //PERMITE VERIFICAR SI EXISTE UN USUARIO CON EL PERFIL DE AGENTE 
     getVerificacionDEAgentes(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
         const appendParams = (obj: any, prefix: string = '') => {
             for (const key in obj) {
               if (obj.hasOwnProperty(key)) {
@@ -122,9 +74,6 @@ export class AgentesServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -142,7 +91,6 @@ export class AgentesServiceCRM {
     }
 
     putAgentes(data:any): Observable<any> {
-        console.log(data)
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', (this.accessToken != null) ? this.accessToken : '');
         let httpParams = new HttpParams()
@@ -151,10 +99,7 @@ export class AgentesServiceCRM {
     }
 
     getAgentesYPersonasBY_ID(data:any, prefix: string = ''): Observable<any> {
-        let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
-    
+        let paramsSeteados = new HttpParams();    
         
         const appendParams = (obj: any, prefix: string = '') => {
             for (const key in obj) {
@@ -171,9 +116,7 @@ export class AgentesServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
+
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -184,8 +127,6 @@ export class AgentesServiceCRM {
     
     getAgentesYPersonasSearch(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
     
         
         const appendParams = (obj: any, prefix: string = '') => {
@@ -203,9 +144,6 @@ export class AgentesServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -217,8 +155,6 @@ export class AgentesServiceCRM {
     
     getAgentesY_Personas(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
     
         
         const appendParams = (obj: any, prefix: string = '') => {
@@ -236,7 +172,6 @@ export class AgentesServiceCRM {
           };
         
         appendParams(data);
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -248,9 +183,7 @@ export class AgentesServiceCRM {
     //CARGA DE USUARIOS EN LINEA
     getAgentesY_PersonasEN_LINIEA(data:any, prefix: string = ''): Observable<any> {
       let paramsSeteados = new HttpParams();
-      console.log("data services")
-      console.log(data)
-  
+       
       
       const appendParams = (obj: any, prefix: string = '') => {
           for (const key in obj) {
@@ -267,7 +200,6 @@ export class AgentesServiceCRM {
         };
       
       appendParams(data);
-        console.log(this.accessToken)
       let headers = new HttpHeaders()
           .set('Content-Type', 'application/json')
           .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -278,8 +210,6 @@ export class AgentesServiceCRM {
   //CARGA DE USUARIOS EN LINEA CON EL ULTIMO MENSAJE ENVIADO
     getAgentesY_Mensaje(data:any, prefix: string = ''): Observable<any> {
       let paramsSeteados = new HttpParams();
-      console.log("data services")
-      console.log(data)
   
       
       const appendParams = (obj: any, prefix: string = '') => {
@@ -297,7 +227,6 @@ export class AgentesServiceCRM {
         };
       
       appendParams(data);
-        console.log(this.accessToken)
       let headers = new HttpHeaders()
           .set('Content-Type', 'application/json')
           .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');

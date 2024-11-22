@@ -90,8 +90,8 @@ export class AuthSignInComponent implements OnInit
 
         // Hide the alert
         this.showAlert = false;
-        console.log("this.signInForm.value")
-        console.log(this.signInForm.value)
+        //console.log("this.signInForm.value")
+        //console.log(this.signInForm.value)
         // Sign in
         this.obj_JSON={
             data:this.signInForm.value,
@@ -102,13 +102,13 @@ export class AuthSignInComponent implements OnInit
 
         this._authServiceCRM.login(this.obj_JSON).subscribe(
             response => {
-              console.log("response 105")
-              console.log(response)
+              //console.log("response 105")
+              //console.log(response)
               if (response.code == 200) {
-                console.log("dento del 200")
+                //console.log("dento del 200")
                 
                 const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-                    console.log("antes de redireccionar ")
+                    //console.log("antes de redireccionar ")
 
                     // Navigate to the redirect url
                     this._router.navigateByUrl(redirectURL);
@@ -128,8 +128,8 @@ export class AuthSignInComponent implements OnInit
             error => {
       
               if (error.status == 400) {
-                console.log(JSON.stringify ("error"))
-                console.log(JSON.stringify (error))
+                //console.log(JSON.stringify ("error"))
+                //console.log(JSON.stringify (error))
                 this._systemService.showAlertError(error.error.message);
                 this.signInForm.enable();
                 //this._systemService.showAlertErrorTop("Datos incorrectos")

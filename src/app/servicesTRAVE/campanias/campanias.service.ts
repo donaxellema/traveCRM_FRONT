@@ -55,6 +55,15 @@ export class campaniasServiceCRM {
         return this.http.post(`${this.apiUrl}campanias/`, data,{ headers: headers, params: httpParams });
     }
 
+    //capturar data por usuarios para el posterior envio por whatsapp
+    postCampaniasByUsers(data:any): Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+            .set('Authorization', (this.accessToken != null) ? this.accessToken : '');
+        let httpParams = new HttpParams()
+            //.set("id", id)
+        return this.http.post(`${this.apiUrl}campanias_send_users/`, data,{ headers: headers, params: httpParams });
+    }
+
 
     getCampanias(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
@@ -75,9 +84,6 @@ export class campaniasServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -87,7 +93,6 @@ export class campaniasServiceCRM {
 
 
     putCampanias(data:any): Observable<any> {
-        console.log(data)
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', (this.accessToken != null) ? this.accessToken : '');
         let httpParams = new HttpParams()
@@ -98,8 +103,6 @@ export class campaniasServiceCRM {
 
     getCampaniasSearch(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data);
         
         const appendParams = (obj: any, prefix: string = '') => {
             for (const key in obj) {
@@ -117,8 +120,6 @@ export class campaniasServiceCRM {
         
         appendParams(data);
           console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -133,36 +134,6 @@ export class campaniasServiceCRM {
           //.set("id", id)
       return this.http.post(`${this.apiUrl}campanias_delete/`, data,{ headers: headers, params: httpParams });
     }
-
-  /* registerTwilio(data:any): Observable<any> {
-     // Throw error, if the user is already logged in
-     if ( !this._authenticated )
-      {
-          return throwError('No esta logeado.');
-      }
-      console.log("despues del authenticated")
-
-    return this.http.post(`${this.apiUrl}parametrosTiwilo`, data).pipe(
-      switchMap((response: any) =>
-      {
-          console.log("JSON.stringify(response)")
-          console.log(JSON.stringify(response.user))
-          // Store the access token in the local storage
-          //this.accessToken = response.token;
-          // Set the authenticated flag to true
-          //this.authenticated = "true";
-          // Store the user on the user service
-          //this._userService.user = response.data;
-          //this.userServiceObserva.setUser(response.user);
-          //localStorage.setItem('user',JSON.stringify(response.user));
-          
-          // Return a new observable with the response
-          return of(response);
-      }),
-  );
-
-  } */
-
 
 
 

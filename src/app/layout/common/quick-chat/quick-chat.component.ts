@@ -118,11 +118,7 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
 
         this._AgentesServices.getAgentesY_PersonasEN_LINIEA(dataA).subscribe(
             (response:any) => {
-                console.log(response)
                 this.chatBDD=response.data
-                //alert(JSON.stringify (this.chatBDD))
-                //this.router.navigate(['']);
-                //this.router.navigate(['/auth']);
               },
               (error) => {
                  
@@ -139,8 +135,6 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
             .subscribe((chat: Chat) =>
             {
                 this.chat = chat;
-                console.log("this.chat")
-                console.log(this.chat)
             });
 
         // Chats
@@ -149,8 +143,6 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
             .subscribe((chats: Chat[]) =>
             {
                 this.chats = chats;
-                console.log("this.chats")
-                console.log(this.chats)
 
             });
 
@@ -160,8 +152,6 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
             .subscribe((chat: Chat) =>
             {
                 this.selectedChat = chat;
-                console.log("this.selectedChat")
-                console.log(this.selectedChat)
             });
     }
 

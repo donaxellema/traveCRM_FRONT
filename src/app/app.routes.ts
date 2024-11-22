@@ -10,14 +10,17 @@ import { LayoutComponent } from 'app/layout/layout.component';
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/example'
-    {path: '', pathMatch : 'full', redirectTo: 'example'},
+    //{path: '', pathMatch : 'full', redirectTo: 'example'},  -->funcional
+    {path: '', pathMatch : 'full', redirectTo: 'pages/dashboard'},
 
     // Redirect signed-in user to the '/example'
     //
     // After the user signs in, the sign-in page will redirect the user to the 'signed-in-redirect'
     // path. Below is another redirection for that path to redirect the user to the desired
     // location. This is a small convenience to keep all main routes together here on this file.
-    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'example'},
+    //{path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'example'}, ---funcional
+    // me redirigira a la ruta 'signed-in-redirect' para luego arrojarme a mi pages/dashboard 
+    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'pages/dashboard'},
 
     // Auth routes for guests
     {
@@ -52,17 +55,7 @@ export const appRoutes: Route[] = [
         ]
     },
 
-    // Landing routes
-    /* {
-        path: '',
-        component: LayoutComponent,
-        data: {
-            layout: 'empty'
-        },
-        children: [
-            {path: 'home', loadChildren: () => import('app/modules/landing/home/home.routes')},
-        ]
-    }, */
+    
 
     // Admin routes
     {
@@ -74,48 +67,11 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver
         },
         children: [
-            {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
+            //{path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
+            {path: 'dashboard', loadChildren: () => import('app/forms/dashboard/dashboard.routes')},
 
             // Pages
             {path: 'pages', children: [
-
-                /* // Activities
-                {path: 'activities', loadChildren: () => import('app/modules/admin/pages/activities/activities.routes')},
-
-                // Authentication
-                {path: 'authentication', loadChildren: () => import('app/modules/admin/pages/authentication/authentication.routes')},
-
-                // Coming Soon
-                {path: 'coming-soon', loadChildren: () => import('app/modules/admin/pages/coming-soon/coming-soon.routes')},
-
-                // Error
-                {path: 'error', children: [
-                    {path: '404', loadChildren: () => import('app/modules/admin/pages/error/error-404/error-404.routes')},
-                    {path: '500', loadChildren: () => import('app/modules/admin/pages/error/error-500/error-500.routes')}
-                ]},
-
-                // Invoice
-                {path: 'invoice', children: [
-                    {path: 'printable', children: [
-                        {path: 'compact', loadChildren: () => import('app/modules/admin/pages/invoice/printable/compact/compact.routes')},
-                        {path: 'modern', loadChildren: () => import('app/modules/admin/pages/invoice/printable/modern/modern.routes')}
-                    ]}
-                ]},
-
-                // Maintenance
-                {path: 'maintenance', loadChildren: () => import('app/modules/admin/pages/maintenance/maintenance.routes')},
-
-                // Pricing
-                {path: 'pricing', children: [
-                    {path: 'modern', loadChildren: () => import('app/modules/admin/pages/pricing/modern/modern.routes')},
-                    {path: 'simple', loadChildren: () => import('app/modules/admin/pages/pricing/simple/simple.routes')},
-                    {path: 'single', loadChildren: () => import('app/modules/admin/pages/pricing/single/single.routes')},
-                    {path: 'table', loadChildren: () => import('app/modules/admin/pages/pricing/table/table.routes')}
-                ]},
-
-                // Profile
-                {path: 'profile', loadChildren: () => import('app/modules/admin/pages/profile/profile.routes')},
-
                 // Settings */
                 {path: 'campanias', loadChildren: () => import('app/forms/campanias/campanias.routes')},
                 {path: 'perfil', loadChildren: () => import('app/forms/perfil/perfiles.routes')},

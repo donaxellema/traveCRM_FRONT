@@ -1,0 +1,85 @@
+<!-- <div class="flex flex-col flex-auto md:w-160 md:min-w-160 p-4">
+    <ng-container *ngIf="data?.camp_fotoCampania?.[0]?.src">
+      <div class="relative w-full h-64">
+        <img py-4 class="mi-imagen w-full h-full object-cover" 
+             src="{{urlImagen}}/{{data.camp_fotoCampania[0].src}}">
+        <div class="absolute right-0 bottom-0 p-4">
+          <button mat-icon-button>
+            <mat-icon class="text-white" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+          </button>
+        </div>
+      </div>
+  
+      <div>
+        <input class="w-full p-2 text-2xl" [placeholder]="'Nombre Campaña'" [(ngModel)]="data.camp_nombre">
+      </div>
+  
+      <div class="flex w-full py-5 px-2">
+        <textarea class="w-full" [placeholder]="'Descripcion'" [(ngModel)]="data.camp_descripcion" (input)="updateNoteDetails(note)" cdkTextareaAutosize></textarea>
+      </div>
+  
+      <div class="flex items-center justify-between mt-4">
+        <div class="flex items-center space-x-2">
+          <button title="Enviar campaña a clientes" mat-icon-button (click)="aplicaCampania(data.etiq_nombre,data.camp_id,data.etiq_id)">
+            <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>
+          </button>
+        </div>
+        <button (click)="onCancel()" mat-flat-button matDialogClose>Close</button>
+      </div>
+    </ng-container>
+  </div>
+   -->
+
+
+
+
+
+
+
+ 
+
+  <img *ngIf="data.camp_fotoCampania!=null" mat-card-image  src="mi-imagen w-full h-full object-cover" 
+  src="{{urlImagen}}/{{data.camp_fotoCampania[0].src}}" alt="Sin foto">
+  
+  <img *ngIf="data.camp_fotoCampania == null" mat-card-image src="mi-imagen w-full h-full object-cover" 
+  src="https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg" alt="Sin foto">
+
+    
+  <h2 mat-dialog-title>Campaña</h2>
+    <mat-dialog-content class="mat-typography">
+
+        <div>
+            <input class="w-full p-2 text-2xl" [placeholder]="'Nombre Campaña'" [(ngModel)]="data.camp_nombre">
+        </div>
+
+        <div class="flex w-full py-5 px-2">
+            <textarea class="w-full" [placeholder]="'Descripcion'" [(ngModel)]="data.camp_descripcion"  cdkTextareaAutosize></textarea>
+        </div>
+        
+    
+        <!-- <div class="flex items-center justify-between mt-4">
+            <div class="flex items-center space-x-2">
+            <button title="Enviar campaña a clientes" mat-icon-button (click)="aplicaCampania(data.etiq_nombre,data.camp_id,data.etiq_id)">
+                <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>
+            </button>
+            </div>
+            <button (click)="onCancel()" mat-flat-button matDialogClose>Close</button>
+        </div> -->
+
+    </mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- <button mat-button mat-dialog-close>Enviar Campaña</button> -->
+  <button mat-stroked-button
+  type="button"
+  mat-button mat-dialog-close (click)="onCancel()">Cerrar</button>
+
+  <button class="ml-4" mat-flat-button type="button" [color]="'primary'" mat-button [mat-dialog-close]="true" 
+  cdkFocusInitial (click)="aplicaCampania(data.etiq_nombre,data.camp_id,data.etiq_id)">
+    
+    <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>
+    Enviar Campaña
+  </button>
+<!-- comentario de verificacion -->
+</mat-dialog-actions>
+
+  

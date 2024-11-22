@@ -9,7 +9,8 @@
                     <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
                         <img
                             class="w-full h-full object-cover"
-                            src="assets/images/avatars/brian-hughes.jpg">
+                            src="{{urlImagen}}/{{usuario.usu_imagen}}  ">
+                            <!-- src="assets/images/avatars/brian-hughes.jpg"> -->
                     </div>
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
@@ -95,7 +96,7 @@
                 <!-- Home -->
                 <mat-tab label="Dashboard">
                     <ng-template matTabContent>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full min-w-0">
                             <!-- Summary -->
                             <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
                                 <div class="flex items-start justify-between">
@@ -116,18 +117,18 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
-                                    <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">21</div>
-                                    <div class="text-lg font-medium text-blue-600 dark:text-blue-500">En linea</div>
+                                    <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"> {{agentesResponse.data.length }} </div>
+                                    <div class="text-lg font-medium text-blue-600 dark:text-blue-500">En linea </div>
                                     <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
                                         <div class="text-md font-medium truncate">de:</div>
-                                        <div class="ml-1.5 text-lg font-semibold">50</div>
+                                        <div class="ml-1.5 text-lg font-semibold"> {{agentesResponse.totalItems}} </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Overdue -->
                             <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
                                 <div class="flex items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Agentes</div>
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Clientes</div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
                                             mat-icon-button
@@ -144,18 +145,18 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
-                                    <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-red-500">17</div>
-                                    <div class="text-lg font-medium text-red-600 dark:text-red-500">Desconectados </div>
+                                    <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-green-500">{{ clientes.totalItems }} </div>
+                                    <div class="text-lg font-medium text-green-600 dark:text-red-500">Activos </div>
                                     <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
                                         <div class="text-md font-medium truncate">de:</div>
-                                        <div class="ml-1.5 text-lg font-semibold">50</div>
+                                        <div class="ml-1.5 text-lg font-semibold"> {{ clientes.totalClientes }}  </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Issues -->
                             <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
                                 <div class="flex items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Mensajes</div>
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Campañas Activas</div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
                                             mat-icon-button
@@ -165,57 +166,71 @@
                                                 [svgIcon]="'heroicons_mini:ellipsis-vertical'"></mat-icon>
                                         </button>
                                         <mat-menu #issuesMenu="matMenu">
-                                            <button mat-menu-item>Lista de mensajes</button>
+                                            <button mat-menu-item>Lista de campañas</button>
                                             <!-- <button mat-menu-item>2 days ago</button>
                                             <button mat-menu-item>3 days ago</button> -->
                                         </mat-menu>
                                     </div>
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
-                                    <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-amber-500">24</div>
-                                    <div class="text-lg font-medium text-amber-600 dark:text-amber-500">Open</div>
+                                    <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-amber-500"> {{campaniasData.data.length }} </div>
+                                    <div class="text-lg font-medium text-amber-600 dark:text-amber-500">Activas</div>
                                     <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
-                                        <div class="text-md font-medium truncate">Closed today:</div>
-                                        <div class="ml-1.5 text-lg font-semibold">19</div>
+                                        <div class="text-md font-medium truncate">de: </div>
+                                        <div class="ml-1.5 text-lg font-semibold"> {{campaniasData.totalItems }} - Inactivas</div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Features -->
-                            <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-                                <div class="flex items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Ventas</div>
-                                    <div class="ml-2 -mt-2 -mr-3">
-                                        <button
-                                            mat-icon-button
-                                            [matMenuTriggerFor]="featuresMenu">
-                                            <mat-icon
-                                                class="icon-size-5"
-                                                [svgIcon]="'heroicons_mini:ellipsis-vertical'"></mat-icon>
-                                        </button>
-                                        <mat-menu #featuresMenu="matMenu">
-                                            <button mat-menu-item>Yesterday</button>
-                                            <button mat-menu-item>2 days ago</button>
-                                            <button mat-menu-item>3 days ago</button>
-                                        </mat-menu>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col items-center mt-2">
-                                    <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-green-500">38</div>
-                                    <div class="text-lg font-medium text-green-600 dark:text-green-500">Proposals</div>
-                                    <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
-                                        <div class="text-md font-medium truncate">Implemented:</div>
-                                        <div class="ml-1.5 text-lg font-semibold">16</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Github issues summary -->
-                            
-                            <!-- Task distribution -->
-                            
-                            <!-- Schedule -->
-                            
                         </div>
+
+
+
+
+
+
+
+
+
+
+                        <!-- Github issues summary -->
+                        <div class="flex flex-col flex-auto mt-6 p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                
+                                <div id="chart">
+                                    <apx-chart [series]="chartOptions.series"
+                                            [chart]="chartOptions.chart"
+                                            [xaxis]="chartOptions.xaxis"
+                                            [dataLabels]="chartOptions.dataLabels"
+                                            [title]="chartOptions.title">
+                                    </apx-chart>
+                                </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        <!-- Github issues summary -->
+                        <div class="flex flex-col flex-auto mt-6 p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                
+                                <div id="chart2">
+                                    <apx-chart [series]="chartOptions_Cliente.series"
+                                                [chart]="chartOptions_Cliente.chart"
+                                                [xaxis]="chartOptions_Cliente.xaxis"
+                                                [dataLabels]="chartOptions_Cliente.dataLabels"
+                                                [stroke]="chartOptions_Cliente.stroke"
+                                                [markers]="chartOptions_Cliente.markers"
+                                                [title]="chartOptions_Cliente.title"
+                                                [legend]="chartOptions_Cliente.legend">
+                                    </apx-chart>
+                                </div>
+                        </div>
+
+                        <!-- <button type="button"
+                        (click)="this.loadAgentesyClientes()">
+                            llama
+                        </button> -->
                     </ng-template>
+                    
                 </mat-tab>
 
                 
@@ -250,7 +265,7 @@
                                     </div>
                                     <!-- Email & Phone -->
                                     <div class="flex items-center w-full border-t divide-x">
-                                        {{member.pers_id}}
+                                        <!-- {{member.pers_id}} -->
                                         <a
                                             class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
                                             [href]="'pages/chats'"
@@ -264,15 +279,6 @@
                                                 [svgIcon]="'heroicons_solid:chat-bubble-left-right'"></mat-icon>
                                             <span class="ml-2">Chats</span>
                                         </a>
-                                        <a
-                                            class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
-                                            [href]="'tel:' + member.pers_telefono">
-                                            <mat-icon
-                                                class="icon-size-5 text-hint"
-                                                [svgIcon]="'heroicons_solid:phone'"></mat-icon>
-                                            <span class="ml-2">Call</span>
-                                        </a>
-                                        
                                         <!-- <a
                                             class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
                                             [href]="'tel:' + member.pers_telefono">
@@ -281,6 +287,8 @@
                                                 [svgIcon]="'heroicons_solid:phone'"></mat-icon>
                                             <span class="ml-2">Call</span>
                                         </a> -->
+                                        
+                                        
                                     </div>
                                 </div>
                             </ng-container>
@@ -292,8 +300,6 @@
 
                     
                 </mat-tab>
-
-
 
 
             </mat-tab-group>

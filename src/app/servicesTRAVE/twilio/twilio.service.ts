@@ -75,9 +75,6 @@ export class twilioServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');

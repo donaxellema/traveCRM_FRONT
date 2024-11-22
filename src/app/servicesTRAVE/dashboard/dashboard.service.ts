@@ -13,7 +13,7 @@ import HmacSHA256 from 'crypto-js/hmac-sha256';
 @Injectable({
   providedIn: 'root'
 })
-export class empresaServiceCRM {
+export class dashboardServiceCRM {
   private _authenticated: boolean = false;
   private _httpClient = inject(HttpClient);
   private apiUrl = global.url;
@@ -47,16 +47,16 @@ export class empresaServiceCRM {
   
 
 
-    postEmpresa(data:any): Observable<any> {
+    /* postEtiquetas(data:any): Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', (this.accessToken != null) ? this.accessToken : '');
         let httpParams = new HttpParams()
             //.set("id", id)
-        return this.http.post(`${this.apiUrl}empresas/`, data,{ headers: headers, params: httpParams });
-    }
+        return this.http.post(`${this.apiUrl}etiquetas/`, data,{ headers: headers, params: httpParams });
+    } */
 
-
-    getEmpresa(data:any, prefix: string = ''): Observable<any> {
+    // EXTRAER USUARIOS ATIVOS - CLIENTES EN EL SISTEMA - CAMPAÑAS ACTIVAS
+    getUserActivos(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
     
         
@@ -78,18 +78,122 @@ export class empresaServiceCRM {
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
-        return this.http.get(`${this.apiUrl}empresas/`, { headers: headers, params: paramsSeteados });
+        return this.http.get(`${this.apiUrl}etiquetas/`, { headers: headers, params: paramsSeteados });
+    }
+    
+    
+    getDataBar(data:any, prefix: string = ''): Observable<any> {
+        let paramsSeteados = new HttpParams();
+    
+        
+        const appendParams = (obj: any, prefix: string = '') => {
+            for (const key in obj) {
+              if (obj.hasOwnProperty(key)) {
+                const value = obj[key];
+                const paramKey = prefix ? `${prefix}.${key}` : key;
+                if (typeof value === 'object' && value !== null) {
+                  appendParams(value, paramKey);
+                } else {
+                    paramsSeteados = paramsSeteados.set(paramKey, value);
+                }
+              }
+            }
+          };
+        
+        appendParams(data);
+        let headers = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
+        return this.http.get(`${this.apiUrl}etiquetasSearch/`, { headers: headers, params: paramsSeteados });
+    }
+    
+    //traer Barra de datos de usuarios asignados a un AGENTE
+    getDataBarraAgentes(data:any, prefix: string = ''): Observable<any> {
+        let paramsSeteados = new HttpParams();
+    
+        
+        const appendParams = (obj: any, prefix: string = '') => {
+            for (const key in obj) {
+              if (obj.hasOwnProperty(key)) {
+                const value = obj[key];
+                const paramKey = prefix ? `${prefix}.${key}` : key;
+                if (typeof value === 'object' && value !== null) {
+                  appendParams(value, paramKey);
+                } else {
+                    paramsSeteados = paramsSeteados.set(paramKey, value);
+                }
+              }
+            }
+          };
+        
+        appendParams(data);
+        let headers = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
+        return this.http.get(`${this.apiUrl}clientes_by_agentes/`, { headers: headers, params: paramsSeteados });
+    }
+    
+    //traer Barra de datos de usuarios asignados a un AGENTE
+    getDataBarraClientes(data:any, prefix: string = ''): Observable<any> {
+        let paramsSeteados = new HttpParams();
+    
+        
+        const appendParams = (obj: any, prefix: string = '') => {
+            for (const key in obj) {
+              if (obj.hasOwnProperty(key)) {
+                const value = obj[key];
+                const paramKey = prefix ? `${prefix}.${key}` : key;
+                if (typeof value === 'object' && value !== null) {
+                  appendParams(value, paramKey);
+                } else {
+                    paramsSeteados = paramsSeteados.set(paramKey, value);
+                }
+              }
+            }
+          };
+        
+        appendParams(data);
+        let headers = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
+        return this.http.get(`${this.apiUrl}clientes_by_provincia/`, { headers: headers, params: paramsSeteados });
     }
 
 
 
-    putEmpresa(data:any): Observable<any> {
-        console.log(data)
+    putEtiquetas(data:any): Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', (this.accessToken != null) ? this.accessToken : '');
         let httpParams = new HttpParams()
             //.set("id", id)
-        return this.http.put(`${this.apiUrl}empresas/`, data,{ headers: headers, params: httpParams });
+        return this.http.put(`${this.apiUrl}etiquetas/`, data,{ headers: headers, params: httpParams });
+    }
+    
+    
+    deleteEtiquetas(data:any): Observable<any> {
+        let paramsSeteados = new HttpParams();
+    
+        
+        const appendParams = (obj: any, prefix: string = '') => {
+            for (const key in obj) {
+              if (obj.hasOwnProperty(key)) {
+                const value = obj[key];
+                const paramKey = prefix ? `${prefix}.${key}` : key;
+                if (typeof value === 'object' && value !== null) {
+                  appendParams(value, paramKey);
+                } else {
+                    paramsSeteados = paramsSeteados.set(paramKey, value);
+                }
+              }
+            }
+          };
+        
+        appendParams(data);
+        let headers = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
+
+        return this.http.delete(`${this.apiUrl}etiquetas/`,{ headers: headers, params: paramsSeteados });
     }
 
 

@@ -17,17 +17,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { personasServiceCRM } from 'app/servicesTRAVE/personas/personas.service';
 import { campaniasServiceCRM } from 'app/servicesTRAVE/campanias/campanias.service';
 import { CampaniasDialogComponent } from 'app/forms_dialog/campanias-dialog/campanias-dialog.component';
+import { CampaniasBYEtiquetasComponent } from 'app/forms_dialog/campanias-byetiquetas/campanias-byetiquetas.component';
+
 
 
 
 @Component({
   selector: 'app-campanias',
   standalone: true,
-  imports: [MatProgressBarModule,FormsModule,TextFieldModule,
+  imports: [MatProgressBarModule,FormsModule,TextFieldModule,MatButtonModule,
     MatIconModule,CommonModule,MatButtonModule,
     MatFormFieldModule, MatInputModule, MatTableModule,MatPaginatorModule],
   templateUrl: './campanias.component.html',
-  styleUrl: './campanias.component.scss'
+  styleUrl: './campanias.component.scss',
+  
 })
 export class CampaniasComponent {
 
@@ -163,7 +166,7 @@ export class CampaniasComponent {
       //usuario:this.userLocal.pers_nombres
     }
     const dialogRef = this.dialog.open(CampaniasDialogComponent, {
-      width: '600px',
+      width: '500px',
       height: '800px',
       data: this.data ,
       disableClose: true,
@@ -205,6 +208,33 @@ export class CampaniasComponent {
       } */
         this.getCampanias();
     });
+
+    }
+ 
+ 
+ //DIALOGO PARA APLICAR CAMPAÑAS POR CLIENTES QUE COMPARTEN ETIQUETAS
+    dialogoEitiquetaCampanias(data:any):void{
+    console.log("data")
+    console.log(data)
+    data.tipodialogo="Editar"
+    //data.usuario=this.userLocal.pers_nombres
+    const dialogRef = this.dialog.open(CampaniasBYEtiquetasComponent, {
+      width: '400px',
+      height: '700px',
+      data: data ,
+      disableClose: true,
+      
+    });
+
+    //dialogRef.afterClosed().subscribe(result => {
+      /* console.log("result")
+      console.log(result)
+      if (result) {
+        console.log('Datos recibidos:', result);
+        // Aquí puedes manejar los datos recibidos
+      } */
+        /* this.getCampanias();
+    }); */
 
     }
 

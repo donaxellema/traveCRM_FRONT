@@ -163,7 +163,7 @@ export class ChatsComponent implements OnInit, OnDestroy
     
             this._AgentesServices.getAgentesY_Mensaje(dataA).subscribe(
                 (response:any) => {
-                    console.log("response++++++++++++++++")
+                    console.log("166 response++++++++++++++++")
                     console.log(response)
                     this.profileN=response.data_sender;
                     console.log("this.profileN")
@@ -180,7 +180,8 @@ export class ChatsComponent implements OnInit, OnDestroy
                   },
                   (error) => {
                      
-          
+                    console.log("error  ----------------- ")
+                    console.log(error)
                   }
             )
 

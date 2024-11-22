@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
-import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
+import { ApexLegend, ApexMarkers, ApexOptions, ApexStroke, NgApexchartsModule } from 'ng-apexcharts';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -21,20 +21,33 @@ import { AgentesServiceCRM } from 'app/servicesTRAVE/agentes/agentes.service';
 import {global} from '../../../app/servicesTRAVE/global';
 import { ChatComponent } from "../chat/chat.component";
 import { PersonaObservableCRM } from 'app/servicesTRAVE/observables/chats/chat.service';
+import { ClientesServiceCRM } from 'app/servicesTRAVE/clientes/cliente.service';
+import { SystemServices } from 'app/servicesTRAVE/systemServices/alerts.service';
+import { campaniasServiceCRM } from 'app/servicesTRAVE/campanias/campanias.service';
 
-//import {global} from '../../../app/servicesTRAVE';
+import { ChartComponent, ApexChart, ApexAxisChartSeries, ApexXAxis, ApexDataLabels, ApexTitleSubtitle } from "ng-apexcharts";
+import { dashboardServiceCRM } from 'app/servicesTRAVE/dashboard/dashboard.service';
 
 
-/* @Component({
-  selector       : 'project',
-  templateUrl    : './project.component.html',
-  encapsulation  : ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone     : true,
-  imports        : [TranslocoModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe],
-})
- */
+export type ChartOptions = {
+    series: ApexAxisChartSeries;
+    chart: ApexChart;
+    xaxis: ApexXAxis;
+    dataLabels: ApexDataLabels;
+    title: ApexTitleSubtitle;
+  };
 
+
+  export type chartOptions_Cliente = {
+    series: ApexAxisChartSeries;
+    chart: ApexChart;
+    xaxis: ApexXAxis;
+    dataLabels: ApexDataLabels;
+    stroke: ApexStroke;
+    markers: ApexMarkers;
+    title: ApexTitleSubtitle;
+    legend: ApexLegend;
+  };
 
 @Component({
   selector: 'app-dashboard',
@@ -44,9 +57,15 @@ import { PersonaObservableCRM } from 'app/servicesTRAVE/observables/chats/chat.s
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
+
+
+
+
 export class DashboardComponent implements OnInit, OnDestroy
 {
+
     public urlImagen = global.urlImagen;
+    public agentesResponse:any[]=[];
 
     chartGithubIssues: ApexOptions = {};
     chartTaskDistribution: ApexOptions = {};
@@ -61,15 +80,64 @@ export class DashboardComponent implements OnInit, OnDestroy
     /**
      * Constructor
      */
+
+    public chartOptions: Partial<ChartOptions>;
+    public chartOptions_Cliente: Partial<chartOptions_Cliente>;
+
+    
     constructor(
         //private _projectService: ProjectService,
         private _router: Router,
         private _AgentesServices: AgentesServiceCRM,
         private _personaObservableServices: PersonaObservableCRM,
-
+        private _clienteservice: ClientesServiceCRM,
+        private _systemServices: SystemServices,
+        private _campaniasServices: campaniasServiceCRM,
+        private _dashboard: dashboardServiceCRM
     )
     {
+        this.chartOptions = {
+            series: [
+              {
+                name: "Personas",
+                data: []  // Los datos de las personas por provincia se cargan aquí
+              }
+            ],
+            chart: {
+              type: "bar",
+              height: 350
+            },
+            title: {
+              text: "Personas por Provincia"
+            },
+            xaxis: {
+              categories: []  // Las provincias se cargan aquí
+            },
+            dataLabels: {
+              enabled: false
+            }
+          };
+
+
+
+          this.chartOptions_Cliente = {
+            series: [],
+            chart: { type: "bar" },
+            xaxis: { categories: [] },
+            dataLabels: { enabled: true },
+            stroke: { show: true, width: 2 },
+            markers: { size: 5 },
+            legend: { position: 'top' }
+          };
+        
     }
+
+
+
+
+
+
+
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -81,21 +149,33 @@ export class DashboardComponent implements OnInit, OnDestroy
     usuario:any;
     ngOnInit(): void
     {
+
+    this.loadProvinciaData();
+    //this.loadClientData();
+    this.loadAgentesyClientes();
+
       this.usuario=localStorage.getItem('user');
       this.usuario=JSON.parse(this.usuario);
-        // Get the data
-        /* this._projectService.data$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data) =>
-            {
-                // Store the data
-                this.data = data;
 
-                // Prepare the chart data
-                this._prepareChartData();
-            }); */
 
-        // Attach SVG fill fixer to all ApexCharts
+      const dataA={ 
+        opcion:"C_USU_ONLINE"
+        //opcion:"C"
+        }
+
+        this._AgentesServices.getAgentesY_PersonasEN_LINIEA(dataA).subscribe(
+            (response:any) => {
+                this.agentesResponse=response
+            },
+            (error) => {
+                
+            }
+        )
+
+        this.getClientes();
+        
+        this.getCampanias();
+
         window['Apex'] = {
             chart: {
                 events: {
@@ -111,9 +191,201 @@ export class DashboardComponent implements OnInit, OnDestroy
             },
         };
 
-
         this.cargarAgentes();
+        
     }
+
+
+
+    public  provincias = [
+        "Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", 
+        "Esmeraldas", "Galápagos", "Guayas", "Imbabura", "Loja", "Los Ríos", 
+        "Manabí", "Morona Santiago", "Napo", "Orellana", "Pastaza", "Pichincha", 
+        "Santa Elena","Santo Domingo de los Tsachilas"];
+
+    loadProvinciaData() {
+        
+
+        const obj={
+            opcion:"PROV",
+            _limite:0,
+            _offset:0
+        }
+
+        this._dashboard.getDataBarraClientes(obj).subscribe(
+            (response:any) => {
+                this.clientes_Provincias = response.data;
+
+                const personasPorProvincia = this.provincias.map(provincia => {
+                    const match = this.clientes_Provincias.find(item => item.provincia === provincia);
+                    return match ? match.total_personas : 0;
+                });
+        
+                // Configuración del gráfico
+                this.chartOptions.series = [{ name: 'Personas', data: personasPorProvincia }];
+                this.chartOptions.xaxis = { categories: this.provincias };
+            },
+            (error) => {
+                //this.messageService.add({ severity: 'error', summary: 'Error!', detail: error.error.error });
+    
+            }
+        );
+
+
+      }
+
+
+
+      // Simulando datos de clientes asignados y etiquetas
+      public clientes_Provincias:any;
+  loadClientData() {
+
+    
+
+
+    const agentes = ['Agente A', 'Agente B', 'Agente C'];
+    const clientesPorAgente = [10, 15, 8];  // Clientes por agente
+    const vipPorAgente = [5, 7, 2];  // VIP por agente
+    const regularPorAgente = [0, 5, 4];  // Regular por agente
+    const regularPorAgente1 = [2, 2, 1];  // Regular por agente
+    const regularPorAgente2 = [0, 1, 1];  // Regular por agente
+    const regularPorAgente3 = [2, 0, 0];  // Regular por agente
+
+    // Asignar datos al gráfico
+    this.chartOptions_Cliente.series = [
+      { name: "Clientes Asignados", type: "column", data: clientesPorAgente },
+      { name: "VIP", type: "line", data: vipPorAgente },
+      { name: "Regular", type: "line", data: regularPorAgente },
+      { name: "Nuevo", type: "line", data: regularPorAgente1 },
+      { name: "Nuevo2", type: "line", data: regularPorAgente2 },
+      { name: "Nuevo3", type: "line", data: regularPorAgente3 }
+    ];
+    this.chartOptions_Cliente.xaxis = { categories: agentes };
+  }
+
+
+    public clientes:any;
+    public clientes_Agentes:any[];
+      //OBTENER CLIENTES DEL SISTEMA
+    getClientes(){
+            const obj={
+            usu_id:0,
+            opcion:"CC",
+            _limite:0,
+            _offset:0
+        }
+
+            this._clienteservice.getClientesY_Personas(obj).subscribe(
+            (response:any) => {
+                this.clientes = response
+                
+            },
+            (error) => {
+                this._systemServices.showAlertError(error.message);
+            }
+            );
+    }
+
+    loadAgentesyClientes(){
+        const obj={
+            opcion:"CAB",
+            _limite:0,
+            _offset:0
+        }
+            this._dashboard.getDataBarraAgentes(obj).subscribe(
+                (response:any) => {
+                    this.clientes_Agentes = response.data
+
+
+                    // Extraer agentes
+                        const agentes = this.clientes_Agentes.map((item: any) => item.agente);
+
+                        // Series para el total de clientes (barras)
+                        const totalClientes = this.clientes_Agentes.map((item: any) => item.total_clientes);
+
+                        // Obtener todas las etiquetas (asumimos que cada agente tiene las mismas etiquetas)
+                        const etiquetas = this.clientes_Agentes[0]?.detalles_clientes.map((detalle: any) => detalle.etiqueta) || [];
+
+                        // Series para cada etiqueta (líneas)
+                        const seriesPorEtiquetas = etiquetas.map((etiqueta: string) => {
+                            return {
+                            name: etiqueta,
+                            type: "line", // Tipo línea para las etiquetas
+                            data: this.clientes_Agentes.map((item: any) => {
+                                const cliente = item.detalles_clientes.find((d: any) => d.etiqueta === etiqueta);
+                                return cliente ? cliente.total : 0;
+                            })
+                            };
+                        });
+
+                        // Configurar las opciones del gráfico
+                        this.chartOptions_Cliente = {
+                            series: [
+                            { name: "Total Clientes", type: "column", data: totalClientes }, // Barras para el total
+                            ...seriesPorEtiquetas // Líneas para los totales por etiquetas
+                            ],
+                            chart: {
+                            type: "line", // Puedes especificar el tipo base como "line", pero cada serie tiene su propio tipo
+                            },
+                            xaxis: {
+                            categories: agentes // Mostrar los nombres de los agentes
+                            },
+                            stroke: {
+                            width: [0, 2, 2, 2] // Grosor de las líneas
+                            },
+                            dataLabels: {
+                            enabled: true // Habilitar etiquetas de datos
+                            },
+                            markers: {
+                            size: 5 // Tamaño de los marcadores para las líneas
+                            },
+                            title: {
+                            text: "Total de Clientes por Agente y Etiquetas"
+                            },
+                            legend: {
+                            show: true // Mostrar leyenda para identificar las etiquetas
+                            }
+                        };
+
+                    
+                },
+                (error) => {
+                    this._systemServices.showAlertError(error.message);
+                }
+                );
+    }
+
+
+    public campaniasData:any
+    getCampanias(){
+      const obj={
+        etiq_id:"",
+        opcion:"CC",
+        _limite:0,
+        _offset:0
+    }
+  
+      this._campaniasServices.getCampanias(obj).subscribe(
+        (response:any) => {
+          //console.log(response)
+          //this.totalElementos = response.totalItems
+          //this.campaniasDataCambiante.next(response.data)
+          this.campaniasData= response
+        },
+        (error) => {
+           
+            this._systemServices.showAlertError(error.error.error);
+          //this.messageService.add({ severity: 'error', summary: 'Error!', detail: error.error.error });
+  
+        }
+      );
+    }
+
+
+
+
+
+
 
     //funcion para actualizar el observable 
     setIdPersona(id:any){
@@ -121,7 +393,7 @@ export class DashboardComponent implements OnInit, OnDestroy
     }
 
 
-    public agentesBDD:any;
+    public agentesBDD:any[]=[];
     cargarAgentes(){
 
     const dataA={ 
@@ -131,11 +403,8 @@ export class DashboardComponent implements OnInit, OnDestroy
 
         this._AgentesServices.getAgentesY_PersonasEN_LINIEA(dataA).subscribe(
             (response:any) => {
-                console.log(response)
                 this.agentesBDD=response.data
-                //alert(JSON.stringify (this.chatBDD))
-                //this.router.navigate(['']);
-                //this.router.navigate(['/auth']);
+                console.log(this.agentesBDD)
             },
             (error) => {
                 

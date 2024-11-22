@@ -75,9 +75,6 @@ export class personasServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -87,9 +84,6 @@ export class personasServiceCRM {
     
     getPersonasSearch(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
-    
         
         const appendParams = (obj: any, prefix: string = '') => {
             for (const key in obj) {
@@ -106,9 +100,6 @@ export class personasServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');

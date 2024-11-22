@@ -58,8 +58,6 @@ export class ClientesServiceCRM {
     //PERMITE VERIFICAR SI EXISTE UN USUARIO CON EL PERFIL DE AGENTE 
     getVerificacionDEClientes(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
         const appendParams = (obj: any, prefix: string = '') => {
             for (const key in obj) {
               if (obj.hasOwnProperty(key)) {
@@ -75,9 +73,7 @@ export class ClientesServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
+          
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -105,8 +101,6 @@ export class ClientesServiceCRM {
 
     getClientesYPersonasBY_ID(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
     
         
         const appendParams = (obj: any, prefix: string = '') => {
@@ -124,9 +118,6 @@ export class ClientesServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -137,8 +128,6 @@ export class ClientesServiceCRM {
     
     getClientesYPersonasSearch(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
     
         
         const appendParams = (obj: any, prefix: string = '') => {
@@ -156,9 +145,6 @@ export class ClientesServiceCRM {
           };
         
         appendParams(data);
-          console.log("mi parametro seteado "+ paramsSeteados)
-          console.log("this.accessToken")
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
@@ -170,8 +156,6 @@ export class ClientesServiceCRM {
     
     getClientesY_Personas(data:any, prefix: string = ''): Observable<any> {
         let paramsSeteados = new HttpParams();
-        console.log("data services")
-        console.log(data)
     
         
         const appendParams = (obj: any, prefix: string = '') => {
@@ -189,7 +173,6 @@ export class ClientesServiceCRM {
           };
         
         appendParams(data);
-          console.log(this.accessToken)
         let headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');

@@ -64,7 +64,7 @@ export class UserComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.user=JSON.parse(localStorage.getItem('user'));
-        console.log(this.user)
+        //console.log(this.user)
         /* this._UsuarioObservableCRM.getUser().subscribe(user => {
                 console.log("user")
                 console.log(user)

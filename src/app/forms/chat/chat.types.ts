@@ -135,6 +135,8 @@ export interface ContactUser
     pers_ciudad?: string;
     pers_telefono?: string;
     etiq_nombre?: string;
+    
+
             //label?: string;
     /* title?: string;
         company?: string;
