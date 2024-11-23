@@ -1,0 +1,50 @@
+<!-- <div class="upload-container">
+    <h2>Cargar Contactos</h2>
+    <form (submit)="onUpload()">
+      <mat-form-field appearance="fill">
+        <mat-label>Selecciona un archivo Excel</mat-label>
+        <input type="file" (change)="onFileSelected($event)" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!selectedFile">Cargar</button>
+    </form>
+  
+    <mat-spinner *ngIf="isLoading" diameter="40"></mat-spinner>
+  </div> -->
+  <div class="upload-container">
+    <h2>Cargar Contactos</h2>
+    <form (submit)="onUpload($event)">
+      <mat-form-field appearance="fill">
+        <mat-label>Archivo Excel</mat-label>
+        <!-- Input de tipo texto solo de lectura que muestra el nombre del archivo -->
+        <input type="text" matInput [value]="fileName" placeholder="Selecciona un archivo" readonly />
+        <button mat-icon-button matSuffix (click)="fileInput.click()" aria-label="Seleccionar archivo">
+          <mat-icon>upload</mat-icon>
+        </button>
+      </mat-form-field>
+    
+      <!-- Input de archivo oculto -->
+      <input
+        type="file"
+        #fileInput
+        (change)="onFileSelected($event)"
+        accept=".xlsx, .xls"
+        style="display: none;"
+      />
+    
+      <button mat-raised-button color="primary" type="submit" [disabled]="!selectedFile">Cargar</button>
+    </form>
+    
+    <mat-spinner *ngIf="isLoading" diameter="40"></mat-spinner>
+  </div>
+  
+  
+  
+
+<!--   <div>
+    <input type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls">
+  </div>
+  
+  <div *ngIf="excelData">
+    <h3>Uploaded Data:</h3>
+    <pre>{{ excelData | json }}</pre>
+  </div> -->

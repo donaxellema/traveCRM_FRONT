@@ -38,6 +38,40 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon : 'heroicons_outline:megaphone',
                 link : '/pages/campanias',
             },
+            {
+                id      : 'configuracion.carga_masiva',
+                title   : 'Carga Masiva',
+                type    : 'collapsable',
+                icon    : 'heroicons_outline:information-circle',
+                link    : '/pages/carga_masiva',
+                children: [
+                    {
+                        id        : 'apps.help-center.home',
+                        title     : 'Carga Maisva',
+                        type      : 'basic',
+                        link      : '/pages/carga_masiva',
+                        exactMatch: true,
+                    },
+                    {
+                        id   : 'apps.help-center.faqs',
+                        title: 'FAQs',
+                        type : 'basic',
+                        link : '/apps/help-center/faqs',
+                    },
+                    {
+                        id   : 'apps.help-center.guides',
+                        title: 'Guides',
+                        type : 'basic',
+                        link : '/apps/help-center/guides',
+                    },
+                    {
+                        id   : 'apps.help-center.support',
+                        title: 'Support',
+                        type : 'basic',
+                        link : '/apps/help-center/support',
+                    },
+                ],
+            },
             
         ]
     },

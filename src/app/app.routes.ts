@@ -77,6 +77,7 @@ export const appRoutes: Route[] = [
                 {path: 'perfil', loadChildren: () => import('app/forms/perfil/perfiles.routes')},
                 {path: 'dashboard', loadChildren: () => import('app/forms/dashboard/dashboard.routes')},
                 {path: 'clientes', loadChildren: () => import('app/forms/usuarios/usuarios.routes')},
+                {path: 'carga_masiva', loadChildren: () => import('app/forms/carga_masiva/carga_masiva.routes')},
                 {path: 'agentes', loadChildren: () => import('app/forms/agentes/agentes.routes')},
                 {path: 'personas', loadChildren: () => import('app/forms/personas/personas.routes')},
                 {path: 'settings', loadChildren: () => import('app/forms/configuraciones/configuraciones.routes')},
