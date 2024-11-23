@@ -180,8 +180,38 @@ export class AgentesServiceCRM {
 
 
 
+   
     //CARGA DE USUARIOS EN LINEA
     getAgentesY_PersonasEN_LINIEA(data:any, prefix: string = ''): Observable<any> {
+      let paramsSeteados = new HttpParams();
+       
+      
+      const appendParams = (obj: any, prefix: string = '') => {
+          for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              const value = obj[key];
+              const paramKey = prefix ? `${prefix}.${key}` : key;
+              if (typeof value === 'object' && value !== null) {
+                appendParams(value, paramKey);
+              } else {
+                  paramsSeteados = paramsSeteados.set(paramKey, value);
+              }
+            }
+          }
+        };
+      
+      appendParams(data);
+      let headers = new HttpHeaders()
+          .set('Content-Type', 'application/json')
+          .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
+      return this.http.get(`${this.apiUrl}agentes_on_line/`, { headers: headers, params: paramsSeteados });
+  }
+    
+
+
+   
+    //CARGA DE USUARIOS EN LINEA
+    getAgentesY_PersonasTotal(data:any, prefix: string = ''): Observable<any> {
       let paramsSeteados = new HttpParams();
        
       

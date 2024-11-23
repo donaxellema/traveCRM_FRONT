@@ -394,6 +394,8 @@ export class DashboardComponent implements OnInit, OnDestroy
 
 
     public agentesBDD:any[]=[];
+    public agentes_tot_BDD:any[]=[];
+    public totalAgentes:any=0;
     cargarAgentes(){
 
     const dataA={ 
@@ -403,7 +405,11 @@ export class DashboardComponent implements OnInit, OnDestroy
 
         this._AgentesServices.getAgentesY_PersonasEN_LINIEA(dataA).subscribe(
             (response:any) => {
+                console.log(response);
+                this.totalAgentes=response.totalItems;
                 this.agentesBDD=response.data
+
+                console.log("this.agentesBDD")
                 console.log(this.agentesBDD)
             },
             (error) => {
@@ -413,6 +419,30 @@ export class DashboardComponent implements OnInit, OnDestroy
     
             }
         )
+
+
+
+        const dataB={ 
+            opcion:"C_USU_AGENTES"
+            //opcion:"C"
+        }
+    
+            this._AgentesServices.getAgentesY_PersonasTotal(dataB).subscribe(
+                (response:any) => {
+                    console.log(response);
+                    //this.totalAgentes=response.data.length;
+                    this.agentes_tot_BDD=response.data
+                    console.log(this.agentesBDD)
+                },
+                (error) => {
+                    
+                
+                    //this.messageService.add({ severity: 'error', summary: 'Error!', detail: error.error.error });
+        
+                }
+            )
+
+
     }
 
 
