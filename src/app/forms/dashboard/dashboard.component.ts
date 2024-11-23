@@ -426,13 +426,14 @@ export class DashboardComponent implements OnInit, OnDestroy
             opcion:"C_USU_AGENTES"
             //opcion:"C"
         }
-    
+        console.log("llamando a los agentes")
             this._AgentesServices.getAgentesY_PersonasTotal(dataB).subscribe(
                 (response:any) => {
+                    console.log("response+++++++");
                     console.log(response);
                     //this.totalAgentes=response.data.length;
                     this.agentes_tot_BDD=response.data
-                    console.log(this.agentesBDD)
+                    //console.log(this.agentes_tot_BDD)
                 },
                 (error) => {
                     

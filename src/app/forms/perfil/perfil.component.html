@@ -55,7 +55,7 @@
 
                 <img
                 class="h-40 lg:h-80 object-cover"
-                src= "{{urlImagen}}{{user.usu_banner}}"
+                src= "{{urlImagen}}{{user?.usu_banner}}"
                 alt="Cover image">
 
 
@@ -140,7 +140,7 @@
 
                 <img
                     class="w-32 h-32 rounded-full ring-4 ring-bg-card"
-                    src={{urlImagen}}{{user.usu_imagen}}
+                    src={{urlImagen}}{{user?.usu_imagen}}
                     alt="User avatar">
                 <!-- <img
                     class="w-32 h-32 rounded-full ring-4 ring-bg-card"
@@ -167,8 +167,8 @@
 
             <!-- Details -->
             <div class="flex flex-col items-center lg:items-start mt-4 lg:mt-0 lg:ml-8">
-                <div class="text-lg font-bold leading-none"> {{user.pers_nombres}} </div>
-                <div class="text-secondary">{{user.pers_ciudad}}, {{user.pers_pais}}</div>
+                <div class="text-lg font-bold leading-none"> {{user?.pers_nombres}} </div>
+                <div class="text-secondary">{{user?.pers_ciudad}}, {{user?.pers_pais}}</div>
             </div>
 
             <!-- Separator -->
@@ -252,7 +252,7 @@
             <fuse-card class="flex flex-col max-w-100 w-full p-8">
                 <div class="text-2xl font-semibold leading-tight">Acerca de mi</div>
                 <div class="mt-4">
-                   {{user.usu_descripcion}}
+                   {{user?.usu_descripcion}}
                 </div>
                 <hr class="w-full border-t my-6">
                 <div class="flex flex-col">
