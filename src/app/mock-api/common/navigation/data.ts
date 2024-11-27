@@ -47,17 +47,18 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 children: [
                     {
                         id        : 'apps.help-center.home',
-                        title     : 'Carga Maisva',
+                        title     : 'Carga Masiva Excel',
                         type      : 'basic',
                         link      : '/pages/carga_masiva',
                         exactMatch: true,
                     },
                     {
                         id   : 'apps.help-center.faqs',
-                        title: 'FAQs',
+                        title: 'Cargar Contactos desde Whastapp',
                         type : 'basic',
-                        link : '/apps/help-center/faqs',
+                        link : '/pages/carga_masiva_whatsapp',
                     },
+                    /*
                     {
                         id   : 'apps.help-center.guides',
                         title: 'Guides',
@@ -69,7 +70,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         title: 'Support',
                         type : 'basic',
                         link : '/apps/help-center/support',
-                    },
+                    },*/
                 ],
             },
             

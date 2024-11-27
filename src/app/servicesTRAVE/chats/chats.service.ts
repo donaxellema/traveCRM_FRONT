@@ -41,9 +41,9 @@ export class ChatsServiceCRM {
   constructor(
     private http: HttpClient,
     
-) {
+    ) {
     //this.token = localStorage.getItem('token');
-}
+    }
   
 
 

@@ -1,0 +1,21 @@
+<div class="contacts-loader">
+    <button mat-raised-button color="primary" (click)="loadContacts()" [disabled]="loading">
+      Cargar Contactos
+    </button>
+  
+    <mat-progress-bar
+      *ngIf="loading"
+      mode="determinate"
+      [value]="progress"
+    ></mat-progress-bar>
+  
+    <div *ngIf="!loading && contacts.length > 0">
+      <h3>Contactos Cargados</h3>
+      <ul>
+        <li *ngFor="let contact of contacts">
+          {{ contact.name }} - {{ contact.number }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  

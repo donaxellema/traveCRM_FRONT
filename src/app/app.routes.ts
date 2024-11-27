@@ -73,6 +73,7 @@ export const appRoutes: Route[] = [
             // Pages
             {path: 'pages', children: [
                 // Settings */
+                {path: 'carga_masiva_whatsapp', loadChildren: () => import('app/forms/carga-masiva-whatsapp/carga-masiva.routes')},
                 {path: 'campanias', loadChildren: () => import('app/forms/campanias/campanias.routes')},
                 {path: 'perfil', loadChildren: () => import('app/forms/perfil/perfiles.routes')},
                 {path: 'dashboard', loadChildren: () => import('app/forms/dashboard/dashboard.routes')},
