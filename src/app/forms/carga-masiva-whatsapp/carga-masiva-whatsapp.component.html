@@ -1,21 +1,52 @@
-<div class="contacts-loader">
-    <button mat-raised-button color="primary" (click)="loadContacts()" [disabled]="loading">
-      Cargar Contactos
-    </button>
+  <mat-card class="progress-card">
+    <mat-card-header>
+      <mat-card-title>Cargar Contactos de WhatsApp</mat-card-title>
+      <mat-card-subtitle>Obtén tus contactos directamente desde tu cuenta</mat-card-subtitle>
+    </mat-card-header>
   
-    <mat-progress-bar
-      *ngIf="loading"
-      mode="determinate"
-      [value]="progress"
-    ></mat-progress-bar>
+    <mat-card-content>
+      <!-- Progreso de la importación -->
+      <div *ngIf="loading" class="progress-container">
+        <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+        <p>{{ progress | number: '1.0-0' }}% - Procesando contactos...</p>
+      </div>
   
-    <div *ngIf="!loading && contacts.length > 0">
-      <h3>Contactos Cargados</h3>
-      <ul>
-        <li *ngFor="let contact of contacts">
-          {{ contact.name }} - {{ contact.number }}
-        </li>
-      </ul>
-    </div>
+      <!-- Mensaje final después de completar -->
+      <div *ngIf="!loading && contacts.length > 0" class="completion-message">
+        <p><strong>Se han importado los contactos de WhatsApp correctamente.</strong></p>
+        <p>{{ contacts.length }} contactos procesados ({{ importedContacts }}% exitosamente).</p>
+      </div>
+  
+      <!-- Botones -->
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="loading"
+        (click)="loadContacts()"
+      >
+        {{ loading ? 'Cargando...' : 'Cargar Contactos' }}
+      </button>
+      <button
+        *ngIf="!loading && contacts.length > 0"
+        mat-stroked-button
+        color="accent"
+        (click)="reloadContacts()"
+      >
+        Volver a importar
+      </button>
+    </mat-card-content>
+  </mat-card>
+  
+  <div class="contacts-list" *ngIf="contacts.length > 0">
+    <mat-card>
+      <mat-card-title>Contactos</mat-card-title>
+      <mat-list>
+        <mat-list-item *ngFor="let contact of contacts">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <div mat-line>{{ contact.name }}</div>
+          <div mat-line>{{ contact.number }}</div>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
   </div>
   

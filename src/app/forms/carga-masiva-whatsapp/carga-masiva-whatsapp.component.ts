@@ -4,82 +4,65 @@ import { HttpClient } from '@angular/common/http';
 import { SystemServices } from 'app/servicesTRAVE/systemServices/alerts.service';
 import { ImportContactosServiceCRM } from 'app/servicesTRAVE/importarContactos/importarcontactos.service';
 
+
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+
+
 @Component({
   selector: 'app-carga-masiva-whatsapp',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatProgressBarModule,MatButtonModule,MatCardModule,MatListModule,MatIconModule],
   templateUrl: './carga-masiva-whatsapp.component.html',
   styleUrl: './carga-masiva-whatsapp.component.scss'
 })
 export class CargaMasivaWhatsappComponent {
-
-
-  loading: boolean = false;
-  progress: number = 0;
   contacts: any[] = [];
+  progress = 0; // Progreso de la importación
+  loading = false;
+  importedContacts = 0; // Porcentaje de contactos importados exitosamente
 
-  constructor(
-    private http: HttpClient,
-    private _importContactosServices :ImportContactosServiceCRM,
-    private _systemServices: SystemServices
-  ) {}
+  constructor(private whatsappContactsService: ImportContactosServiceCRM) {}
 
-  totalElementos=0;
+  ngOnInit(): void {}
+
   loadContacts() {
     this.loading = true;
+    this.contacts = [];
     this.progress = 0;
-    
-    this._importContactosServices.getContactosWhatsapp().subscribe(
-      (response: any) => {
-        const data = response.data; // Suponiendo que los contactos vienen en `response.data`.
-        const total = data.length; // Total de contactos.
-        this.contacts = [];
-        this.totalElementos = response.totalItems; // Si la respuesta incluye un total de elementos.
-        this.loading = true; // Inicia la carga.
-    
-        data.forEach((contact: any, index: number) => {
+    this.importedContacts = 0;
+
+    this.whatsappContactsService.getContactosWhatsapp().subscribe({
+      next: (response) => {
+        const total = response.data.length;
+
+        // Procesar contactos uno por uno simulando carga progresiva
+        response.data.forEach((contact: any, index: number) => {
           setTimeout(() => {
             this.contacts.push(contact);
-            this.progress = ((index + 1) / total) * 100; // Calcula el progreso.
-    
-            if (this.progress === 100) {
-              this.loading = false; // Finaliza la carga al 100%.
-            }
-          }, 100 * index); // Simula la carga progresiva.
-        });
-    
-        console.log('Contactos cargados:', this.contacts);
-      },
-      (error) => {
-        console.error('Error al cargar contactos:', error);
-        this._systemServices.showAlertError(error.error?.error || 'Error desconocido');
-        this.loading = false; // Detiene la carga en caso de error.
-      }
-    );
-
-    /*
-    this.http.get<any[]>('/api/whatsapp/contacts').subscribe({
-      next: (data) => {
-        const total = data.length;
-        this.contacts = [];
-
-        data.forEach((contact, index) => {
-          setTimeout(() => {
-            this.contacts.push(contact);
-            this.progress = ((index + 1) / total) * 100;
+            this.progress = ((index + 1) / total) * 100; // Actualizar progreso
 
             if (this.progress === 100) {
               this.loading = false;
+
+              // Simular el porcentaje de contactos importados exitosamente
+              // Aquí puedes cambiar la lógica para reflejar los datos reales
+              this.importedContacts = Math.round((this.contacts.length / total) * 100);
             }
-          }, 100 * index); // Simula una carga progresiva.
+          }, 200 * index); // Retraso en la carga de cada contacto
         });
       },
       error: (err) => {
         console.error('Error al cargar contactos:', err);
         this.loading = false;
       },
-    });*/
-
+    });
   }
 
+  reloadContacts() {
+    this.loadContacts();
+  }
 }

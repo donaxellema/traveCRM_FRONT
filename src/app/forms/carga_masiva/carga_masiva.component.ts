@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,50 +8,60 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 
 
+import * as XLSX from 'xlsx';
+import { ImportContactosServiceCRM } from 'app/servicesTRAVE/importarContactos/importarcontactos.service';
+// Angular Material Modules
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
     selector: 'app-cargamasiva',
     standalone: true,
-    imports: [MatFormFieldModule,MatInputModule,CommonModule, MatInputModule,
+    imports: [MatFormFieldModule,MatInputModule,CommonModule, MatInputModule,MatButtonModule,MatCardModule,MatProgressBarModule,
         MatSelectModule,MatIconModule],
     templateUrl: './carga_masiva.component.html',
     styleUrl: './carga_masiva.component.scss',
     
   })
   export class CargaMasivaComponent {
-    selectedFile: File | null = null;
-  fileName: string = '';
-  isLoading: boolean = false;
+    fileName: string = '';
+  progress: number = 0;
+  isUploading: boolean = false;
+  uploadMessage: string = '';
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(private fileUploadService: ImportContactosServiceCRM) {}
 
-  // Método que maneja la selección del archivo
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-    this.fileName = this.selectedFile ? this.selectedFile.name : '';
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (file) {
+      this.fileName = file.name;
+      this.isUploading = true;
+      this.progress = 0;
+
+      this.fileUploadService.uploadFile(file).subscribe({
+        next: (event) => {
+          if (event.type === HttpEventType.UploadProgress && event.total) {
+            this.progress = Math.round((100 * event.loaded) / event.total);
+          } else if (event.type === HttpEventType.Response) {
+            this.uploadMessage = `Archivo cargado exitosamente. Total contactos: ${event.body.total}`;
+            this.isUploading = false;
+          }
+        },
+        error: () => {
+          this.uploadMessage = 'Error al cargar el archivo.';
+          this.isUploading = false;
+        },
+      });
+    }
   }
 
-  // Método que maneja el envío del formulario y la carga del archivo
-  onUpload(event: Event) {
-    event.preventDefault();  // Evita que la página se recargue
-
-    if (this.selectedFile) {
-      this.isLoading = true;
-      const formData = new FormData();
-      formData.append('file', this.selectedFile);
-
-      // Enviar archivo al backend
-      this.http.post('http://localhost:3000/api/uploadcontac', formData).subscribe(
-        (response: any) => {
-          this.isLoading = false;
-          this.snackBar.open('Archivo cargado exitosamente.', 'Cerrar', { duration: 3000 });
-        },
-        (error) => {
-          this.isLoading = false;
-          this.snackBar.open('Error al cargar el archivo.', 'Cerrar', { duration: 3000 });
-        }
-      );
-    }
+  restartUpload(): void {
+    this.fileName = '';
+    this.progress = 0;
+    this.uploadMessage = '';
   }
 
   }  

@@ -85,9 +85,7 @@ export class CampaniasBYEtiquetasComponent {
             }
           },
           (error) => {
-            
-            console.log(error);
-              this._systemServices.showAlertError(error.error.error);
+              this._systemServices.showAlertError(error.error.message);
               //this.getCampanias();
   
             //this.messageService.add({ severity: 'error', summary: 'Error!', detail: error.error.error });

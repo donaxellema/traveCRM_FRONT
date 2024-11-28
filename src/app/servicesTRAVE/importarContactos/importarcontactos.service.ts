@@ -41,6 +41,11 @@ export class ImportContactosServiceCRM {
     }
 
     getContactosWhatsapp(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}get-contactos/`);
+      }
+
+
+    /* getContactosWhatsapp(): Observable<any> {
         let paramsSeteados = new HttpParams();
     
         
@@ -63,6 +68,23 @@ export class ImportContactosServiceCRM {
             .set('Content-Type', 'application/json')
             .set('Authorization', this.accessToken ?  `${this.accessToken}`:'');
         return this.http.get(`${this.apiUrl}get-contactos/`, { headers: headers, params: paramsSeteados });
-    }
+    } */
+
+
+
+
+        //private apiUrl = 'http://localhost:3000/api/upload'; // Cambia esto según tu backend
+
+        //constructor(private http: HttpClient) {}
+      
+        uploadFile(file: File): Observable<any> {
+          const formData = new FormData();
+          formData.append('file', file);
+      
+          return this.http.post(`${this.apiUrl}upload-contacts/`, formData, {
+            reportProgress: true,
+            observe: 'events',
+          });
+        }
 
 }
