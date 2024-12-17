@@ -154,7 +154,7 @@ export class ChatsComponent implements OnInit, OnDestroy
                 muted:false,
                 lastMessageAt:'26/04/2024'
             }
-        ]
+            ]
             const dataA={ 
                 opcion:"C_LIST_CHAT_BY_USER",
                 pers_id:this.pers_id
@@ -174,6 +174,8 @@ export class ChatsComponent implements OnInit, OnDestroy
                     console.log(this.data_chats);
                     //this.chats = this.filteredChats = response.data;
                     this.chatsN = this.filteredChatsN = response.data;
+                    console.log("firsttttttttttttttttttttttttttttttttttt");
+                    console.log(this.chatsN);
                     //this.chatsN = this.filteredChatsN = response.data;
                     /* console.log("this.chatsN 94")
                     console.log(this.chatsN) */

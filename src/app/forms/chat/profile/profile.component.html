@@ -23,12 +23,12 @@
                 <img
                     class="w-full h-full rounded-full object-cover"
                     
-                    src="{{urlImagen}}/{{profile.usu_imagen}}"
+                    src="{{urlImagen}}/{{profile?.usu_imagen}}"
                     [alt]="'Profile avatar'">
             </ng-container>
             <ng-container *ngIf="!profile.usu_imagen">
                 <div class="flex items-center justify-center w-full h-full rounded-full text-8xl font-semibold uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                    {{profile.pers_nombres.charAt(0)}}
+                    {{profile.pers_nombres?.charAt(0)}}
                 </div>
             </ng-container>
         </div>

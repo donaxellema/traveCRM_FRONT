@@ -14,20 +14,20 @@
         <!-- Contact avatar & info -->
         <div class="flex flex-col items-center mt-8">
             <div class="w-40 h-40 rounded-full">
-                <ng-container *ngIf="chat.usu_imagen">
+                <ng-container *ngIf="chat?.usu_imagen">
                     <img
                         class="w-full h-full rounded-full object-cover"
-                        src="{{urlImagen}}/{{chat.usu_imagen}}"
+                        src="{{urlImagen}}/{{chat?.usu_imagen}}"
                         [alt]="'Contact avatar'">
                 </ng-container>
                 <ng-container *ngIf="!chat.usu_imagen">
                     <div class="flex items-center justify-center w-full h-full rounded-full text-8xl font-semibold uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                        {{chat.pers_nombres.charAt(0)}}
+                        {{chat?.pers_nombres?.charAt(0)}}
                     </div>
                 </ng-container>
             </div>
-            <div class="mt-4 text-lg font-medium"> {{chat.pers_nombres}} {{chat.pers_apellidos}}</div>
-            <div class="mt-0.5 text-md text-secondary">{{chat.etiq_nombre}}</div>
+            <div class="mt-4 text-lg font-medium"> {{chat?.pers_nombres}} {{chat?.pers_apellidos}}</div>
+            <div class="mt-0.5 text-md text-secondary">{{chat?.etiq_nombre}}</div>
         </div>
 
         <div class="py-10 px-7">
@@ -35,28 +35,28 @@
             <!-- Details -->
             <div class="mt-10 space-y-4">
                 <div class="text-lg font-medium mb-3">Detalles</div>
-                <ng-container *ngIf="chat.usu_email.length">
+                <ng-container *ngIf="chat?.usu_email">
                     <div>
                         <div class="font-medium text-secondary">Email</div>
-                        <div class="">{{chat.usu_email}}</div>
+                        <div class="">{{chat?.usu_email}}</div>
                     </div>
                 </ng-container>
-                <ng-container *ngIf="chat.pers_telefono.length">
+                <ng-container *ngIf="chat?.pers_telefono">
                     <div>
                         <div class="font-medium text-secondary">Teléfono</div>
-                        <div class="">{{chat.pers_telefono}}</div>
+                        <div class="">{{chat?.pers_telefono}}</div>
                     </div>
                 </ng-container>
-                <ng-container *ngIf="chat.etiq_nombre">
+                <ng-container *ngIf="chat?.etiq_nombre">
                     <div>
                         <div class="font-medium text-secondary">Tipo CLiente</div>
-                        <div class="">{{chat.etiq_nombre}}</div>
+                        <div class="">{{chat?.etiq_nombre}}</div>
                     </div>
                 </ng-container>
-                <ng-container *ngIf="chat.pers_ciudad">
+                <ng-container *ngIf="chat?.pers_ciudad">
                     <div>
                         <div class="font-medium text-secondary">Ciudad</div>
-                        <div class="">{{chat.pers_ciudad}}</div>
+                        <div class="">{{chat?.pers_ciudad}}</div>
                     </div>
                 </ng-container>
             </div>

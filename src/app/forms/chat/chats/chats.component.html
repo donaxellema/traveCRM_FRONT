@@ -44,7 +44,9 @@
                                             alt="Profile avatar"/>
                                     </ng-container>
                                     <ng-container *ngIf="!profileN?.usu_imagen">
-                                        <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                        <div class="
+                                            flex items-center justify-center w-full h-full rounded-full text-lg 
+                                            uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                                             {{profileN?.pers_nombres}} 
                                         </div>
                                     </ng-container>
@@ -120,19 +122,19 @@
                                 <a
                                     class="z-20 flex items-center py-5 px-8 cursor-pointer border-b"
                                     [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedChatN || selectedChatN.id !== chat.pers_id,
-                                                'bg-primary-50 dark:bg-hover': selectedChatN && selectedChatN.pers_id === chat.pers_id }"
-                                    [routerLink]="[ chat.chat_id,pers_id,chat.pers_usu[0].pers_id]"> 
+                                                'bg-primary-50 dark:bg-hover': selectedChatN && selectedChatN?.pers_id === chat.pers_id }"
+                                    [routerLink]="[ chat.chat_id,pers_id,chat.pers_usu[0]?.pers_id]"> 
                                     <!-- [chat.pers_id, chat.userId] -->
                                     <div class="relative flex flex-0 items-center justify-center w-10 h-10">
                                         <ng-container *ngIf="chat.unreadCount > 0">
                                             <div
                                                 class="absolute bottom-0 right-0 flex-0 w-2 h-2 -ml-0.5 rounded-full ring-2 ring-bg-card dark:ring-gray-900 bg-primary dark:bg-primary-500 text-on-primary"
-                                                [class.ring-primary-50]="selectedChatN && selectedChatN.pers_id === chat.pers_id"></div>
+                                                [class.ring-primary-50]="selectedChatN && selectedChatN?.pers_id === chat?.pers_id"></div>
                                         </ng-container>
-                                        <ng-container *ngIf="chat.usu_imagen">
+                                        <ng-container *ngIf="chat?.usu_imagen">
                                             <img
                                                 class="w-full h-full rounded-full object-cover"
-                                                src="{{urlImagen}}/{{chat.usu_imagen}}"
+                                                src="{{urlImagen}}/{{chat?.usu_imagen}}"
                                                 alt="Contact avatar"/>
                                         </ng-container>
                                         <ng-container *ngIf="!chat.usu_imagen">
@@ -142,10 +144,10 @@
                                         </ng-container>
                                     </div>
                                     <div class="min-w-0 ml-4">
-                                        <div class="font-medium leading-5 truncate">{{chat.nombres_usu}} </div>
+                                        <div class="font-medium leading-5 truncate">{{chat?.nombres_usu}} </div>
                                         <div  *ngIf="!chat?.mensajes?.[0]?.msg_contenido"
                                             class="leading-5 truncate text-secondary"
-                                            [class.text-primary]="chat.unreadCount > 0"
+                                            [class.text-primary]="chat?.unreadCount > 0"
                                             [class.dark:text-primary-500]="chat.unreadCount > 0">
                                             Contenido no disponible
                                         </div>
@@ -153,7 +155,7 @@
                                             class="leading-5 truncate text-secondary"
                                             [class.text-primary]="chat.unreadCount > 0"
                                             [class.dark:text-primary-500]="chat.unreadCount > 0">
-                                            {{chat.mensajes[0].msg_contenido}}
+                                            {{chat.mensajes[0]?.msg_contenido}}
                                         </div>
                                     </div>
                                     <div class="flex flex-col items-end self-start ml-auto pl-2">
